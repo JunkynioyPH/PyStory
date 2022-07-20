@@ -1,8 +1,8 @@
 import os, time, json
-# from rich import pretty
-# pretty.install()
-import App.Generic as Generic
+from rich import pretty
+pretty.install()
 from App.Generic import console
+import App.Generic as Generic
 import App.AudSys as AudSys
 
 os.system('cls' if os.name=='nt' else 'clear')
