@@ -5,7 +5,7 @@ Biggest project I've worked on yet!
 
 Please refer to the issues tab if any issues, duh.
 
-# Pre-Requisites
+## Pre-Requisites
 **(Python 3.10.x+ & make sure you have Ttk/TKinter Ticked!)**
 
 Requires **python 3.10.x+** to be installed.
