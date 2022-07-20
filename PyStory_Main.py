@@ -11,7 +11,6 @@ os.system('title PyStory - Junkynioy#2408')
 # Settings(): function, Perhaps use JSON
 
 def Splash():
-    global SplashText
     SplashText = """
   ▄████  ▄▄▄       ███▄ ▄███▓▓█████    ▄▄▄█████▓ ██▓▄▄▄█████▓ ██▓    ▓█████
  ██▒ ▀█▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀    ▓  ██▒ ▓▒▓██▒▓  ██▒ ▓▒▓██▒    ▓█   ▀
@@ -24,7 +23,6 @@ def Splash():
       ░       ░  ░       ░      ░  ░             ░               ░  ░   ░  ░
 http://www.patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=Game%20Title"""
     print(SplashText)
-    Generic.Wait(2)
 
 def GameInit():
     # load volume from settings
@@ -45,8 +43,9 @@ def Selection(Option):
         case 3:
             Generic.ClearScreen()
             Generic.Settings()
-        # case _:
-        #     Generic.ClearScreen()
+        case _:
+            Generic.ClearScreen()
+            Splash()
         #     Generic.SystemMsg('warning','Poggers')
         #     Generic.SystemMsg('critical','Poggers')
         #     Generic.SystemMsg('question','Poggers')
@@ -70,7 +69,7 @@ def GameLoop():
             Selection(int(input('>> ')))
         except Exception as ERR:
             Generic.ClearScreen()
-            print(SplashText)
+            Splash()
         # x = input("\nCurrently in Mainloop : ")
         # if x == '':
         #     Generic.MessageBox('Title','Subtitle','Message',3,'ContinueButton')
