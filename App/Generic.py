@@ -38,11 +38,13 @@ def ImageBox():
 def printmd(String):
     rich.print(String)
 
+# perform loading save data (which chapter, perhaps where in the chapter(might add a counter for that), reputation for each character)
+# show loading screen showing a list of save-SaveName.json files in SAVES folder
+
+## MENUSCREENS.PY MIGHT RENDER THIS NOT REQUIRED.
 def Settings():
     print('Settings Shown')
 
-# perform loading save data (which chapter, perhaps where in the chapter(might add a counter for that), reputation for each character)
-# show loading screen showing a list of save-SaveName.json files in SAVES folder
 def LoadFile():
     print('File loaded')
 
