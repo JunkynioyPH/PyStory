@@ -1,11 +1,11 @@
 import os, time
 from rich import pretty
-pretty.install()
 from App.Generic import console
 import App.Generic as Generic
 import App.AudSys as AudSys
+pretty.install()
 
-os.system('cls' if os.name=='nt' else 'clear')
+Generic.ClearScreen()
 os.system('title PyStory - Junkynioy#2408')
 
 # Settings(): function, Perhaps use JSON
