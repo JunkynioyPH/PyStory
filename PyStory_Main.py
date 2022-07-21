@@ -27,7 +27,7 @@ http://www.patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=Game%20Title""
 def GameInit():
     # load volume from settings
     # Generic.LoadSave() somewhere in the main menu
-    AudSys.AudioSystemInitialise(0.250/10)
+    AudSys.AudioSystemInitialise(0.025) # 25%
 
     # use [['text1'],[text2]] .py list for Dialogues
     # ChapterX.py which contains a list of dialogue for that chapter
