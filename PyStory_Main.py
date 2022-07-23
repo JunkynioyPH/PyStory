@@ -46,14 +46,17 @@ def Selection(Option):
         case _:
             Generic.ClearScreen()
             Splash()
-        #     Generic.SystemMsg('warning','Poggers')
-        #     Generic.SystemMsg('critical','Poggers')
-        #     Generic.SystemMsg('question','Poggers')
-        #     Generic.SystemMsg('neutral','Poggers')
+            # Send any numbers in the Main Menu to trigger this test
+            Generic.SystemMsg('warning','Poggers')
+            Generic.SystemMsg('critical','Poggers')
+            Generic.SystemMsg('question','Poggers')
+            Generic.SystemMsg('neutral','Poggers')
 
 def GameLoop():
     while True:
         SongPos = int(AudSys.audio.music.get_pos()/1000)
+        # This is only here because AudioSoundPlay() uses same functions as AudioMusicPlay()
+        # once i figure out how to do mixer.sound or something, this will be forced to play main menu music
         if SongPos != 0:
             pass
         else:

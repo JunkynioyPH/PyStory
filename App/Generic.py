@@ -12,7 +12,7 @@ def ClearScreen():
 
 def MessageBox(Title, Subtitle, Message, Button="OK", Duration=120):
     TITLE, SUBTITLE, MESSAGE, BUTTON = Title.replace('"','\\"'), Subtitle.replace('"','\\"'), Message.replace('"','\\"'), Button.replace('"','\\"')
-    os.system(f'python .\App\MessageBox.pyw "{TITLE}" "{SUBTITLE}" "{MESSAGE}" {Duration} "{BUTTON}"')
+    os.system(f'.\App\MessageBox.pyw "{TITLE}" "{SUBTITLE}" "{MESSAGE}" {Duration} "{BUTTON}"')
 
 def SystemMsg(Type, Message, Sfx=''):
     Type = Type.lower()
