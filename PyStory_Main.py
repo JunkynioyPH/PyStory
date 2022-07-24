@@ -60,7 +60,7 @@ def GameLoop():
         if SongPos != 0:
             pass
         else:
-            AudSys.AudioMusicPlay("Dark-MainMenu-Song.ogg")
+            AudSys.AudioMusicPlay("Dark-main-menu-song-REV1.ogg")
         MainMenu = """
                             [green][1] New Game[/green]
                             [yellow][2] Load Game[/yellow]
