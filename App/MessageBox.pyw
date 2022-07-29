@@ -1,4 +1,4 @@
-import sys, time
+import sys
 from tkinter import *
 from tkinter import ttk
 
