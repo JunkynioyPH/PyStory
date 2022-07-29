@@ -9,7 +9,7 @@ class Settings(Cmd):
         return True
 
    def do_add(self, inp):
-        print("Adding '{}'".format(inp))
+        print(f"Adding '{inp}'")
 
 # ClearScreen()
 Settings().cmdloop()
