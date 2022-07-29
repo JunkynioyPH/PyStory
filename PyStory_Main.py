@@ -1,4 +1,4 @@
-import os, time
+import os
 from rich import pretty
 from App.Generic import console
 import App.Generic as Generic
@@ -89,4 +89,5 @@ GameInit()
 GameLoop()
 
 # after gameloop ends
+Generic.printmd("[red]Game Closed[/red]")
 Generic.Wait(5)
