@@ -79,7 +79,11 @@ def GameLoop():
         #     break
 
 # Game will be based on a reputation system, reputation of the player to each character introduced.
+
 # Use json for saving reputation in Global Use inside .\Assets\GlobalVariables
+# instead of the above use of jeson for reputation, create some sort of save-file format for saving
+# data, and use a separate folder in .\Assets for loading in saves to keep the saves un-altered unless
+# the player saved the game
 
 # create a separate .py file to display images perhaps using tkinter's GUI !
 
