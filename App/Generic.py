@@ -17,17 +17,17 @@ def MessageBox(Title, Subtitle, Message, Button="OK", Duration=120):
 def SystemMsg(Type, Message, Sfx=''):
     Type = Type.lower()
     match Type:
-        case "warning":
-            AudSys.AudioSoundPlay('ErrExclamation.wav')
+        case "warning": 
+            AudSys.SoundFX(filename='ErrExclamation.wav').Play()
             MessageBox('System','Warning',f"{Message}")
         case "critical":
-            AudSys.AudioSoundPlay('ErrCritStop.wav')
+            AudSys.SoundFX(filename='ErrCritStop.wav').Play()
             MessageBox('System','Critical',f"{Message}")
         case "question":
-            AudSys.AudioSoundPlay('ErrQuestion.wav')
+            AudSys.SoundFX(filename='ErrQuestion.wav').Play()
             MessageBox('System','Question',f"{Message}")
         case "neutral":
-            AudSys.AudioSoundPlay('ErrAsterisk.wav')
+            AudSys.SoundFX(filename='ErrAsterisk.wav').Play()
             MessageBox('System','Information',f"{Message}")
         case _:
             MessageBox('System','Message',f"{Message}")

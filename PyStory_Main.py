@@ -2,7 +2,7 @@ import os
 from rich import pretty
 from App.Generic import console
 import App.Generic as Generic
-import App.AudSys as AudSys
+import App.Extra as Extra
 pretty.install()
 
 Generic.ClearScreen()
@@ -25,14 +25,17 @@ http://www.patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=Game%20Title""
     print(SplashText)
 
 def GameInit():
+    global looping
     # load volume from settings
     # Generic.LoadSave() somewhere in the main menu
-    AudSys.AudioSystemInitialise(0.025) # 25%
+    Generic.AudSys.AudioSystemInitialise(25) # 25%
+    looping = True
 
     # use [['text1'],[text2]] .py list for Dialogues
     # ChapterX.py which contains a list of dialogue for that chapter
 
 def Selection(Option):
+    global looping
     match Option:
         case 1:
             Generic.ClearScreen()
@@ -43,40 +46,48 @@ def Selection(Option):
         case 3:
             Generic.ClearScreen()
             Generic.Settings()
+        case 4:
+            if input('Are you Sure? [y/n] >> ').lower() == 'y':
+                looping = False
+            else:
+                Generic.ClearScreen()
+                print('Returning to Menu')
+                Splash()
         case _:
             Generic.ClearScreen()
             Splash()
-            # Send any numbers in the Main Menu to trigger this test
+            # Send any number/string in the Main Menu to trigger this test
             Generic.SystemMsg('warning','Poggers')
             Generic.SystemMsg('critical','Poggers')
             Generic.SystemMsg('question','Poggers')
             Generic.SystemMsg('neutral','Poggers')
 
 def GameLoop():
-    while True:
-        SongPos = int(AudSys.audio.music.get_pos()/1000)
-        # This is only here because AudioSoundPlay() uses same functions as AudioMusicPlay()
-        # once i figure out how to do mixer.sound or something, this will be forced to play main menu music
-        if SongPos != 0:
+    global looping
+    while looping:
+        if Generic.AudSys.audio.music.get_busy() == True:
+            console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy()))
             pass
         else:
-            AudSys.AudioMusicPlay("Dark-main-menu-song-REV1.ogg")
+            Generic.AudSys.Music(filename="Dark-main-menu-song-REV1.ogg", play=True).Load()
         MainMenu = """
                             [green][1] New Game[/green]
                             [yellow][2] Load Game[/yellow]
-                            [3] Settings
-                        """
-        # print(f"[italic red]{MainMenu}[/italic red] Poggers",locals())
+                            [blue][3] Settings[/blue]
+                            [red][4] Exit[/red]
+                    """
+        # printmd(f"[italic red]{MainMenu}[/italic red] Poggers")
+        leaveterms = ["quit","leave","exit"]
         try:
             Generic.printmd(MainMenu)
-            Selection(int(input('>> ')))
+            selection = input('>> ')
+            # Extra.Fun(selection) is for funny
+            Extra.Fun(selection)
+            Selection(int(selection))
         except Exception as ERR:
             Generic.ClearScreen()
+            console.log(f"Selection Error: {ERR} is given.")
             Splash()
-        # x = input("\nCurrently in Mainloop : ")
-        # if x == '':
-        #     Generic.MessageBox('Title','Subtitle','Message',3,'ContinueButton')
-        #     break
 
 # Game will be based on a reputation system, reputation of the player to each character introduced.
 
@@ -92,6 +103,5 @@ GameInit()
 
 GameLoop()
 
-# after gameloop ends
 Generic.printmd("[red]Game Closed[/red]")
-Generic.Wait(5)
+Generic.Wait(2)
