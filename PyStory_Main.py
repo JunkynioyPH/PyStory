@@ -5,13 +5,15 @@ import App.Generic as Generic
 import App.Extra as Extra
 pretty.install()
 
-Generic.ClearScreen()
+Generic.clearscreen()
 os.system('title PyStory - Junkynioy#2408')
 
 # Settings(): function, Perhaps use JSON
 
-def Splash():
-    SplashText = """
+def splash():
+    # FONT SIZE : 16
+    # FONT      : Cascadia
+    splashText = """
   ▄████  ▄▄▄       ███▄ ▄███▓▓█████    ▄▄▄█████▓ ██▓▄▄▄█████▓ ██▓    ▓█████
  ██▒ ▀█▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀    ▓  ██▒ ▓▒▓██▒▓  ██▒ ▓▒▓██▒    ▓█   ▀
 ▒██░▄▄▄░▒██  ▀█▄  ▓██    ▓██░▒███      ▒ ▓██░ ▒░▒██▒▒ ▓██░ ▒░▒██░    ▒███
@@ -22,54 +24,54 @@ def Splash():
 ░ ░   ░   ░   ▒   ░      ░      ░        ░       ▒ ░  ░        ░ ░      ░
       ░       ░  ░       ░      ░  ░             ░               ░  ░   ░  ░
 http://www.patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=Game%20Title"""
-    print(SplashText)
+    print(splashText)
 
-def GameInit():
-    global looping
+def gameinit():
+    global gamelooping
     # load volume from settings
     # Generic.LoadSave() somewhere in the main menu
-    Generic.AudSys.AudioSystemInitialise(25) # 25%
-    looping = True
+    Generic.AudSys.audiosysteminit(25) # 25%
+    gamelooping = True
 
     # use [['text1'],[text2]] .py list for Dialogues
     # ChapterX.py which contains a list of dialogue for that chapter
 
-def Selection(Option):
-    global looping
+def selection(Option):
+    global gamelooping
     match Option:
         case 1:
-            Generic.ClearScreen()
+            Generic.clearscreen()
             Generic.NewGame()
         case 2:
-            Generic.ClearScreen()
+            Generic.clearscreen()
             Generic.LoadFile()
         case 3:
-            Generic.ClearScreen()
+            Generic.clearscreen()
             Generic.Settings()
         case 4:
             if input('Are you Sure? [y/n] >> ').lower() == 'y':
-                looping = False
+                gamelooping = False
             else:
-                Generic.ClearScreen()
+                Generic.clearscreen()
                 print('Returning to Menu')
-                Splash()
+                splash()
         case _:
-            Generic.ClearScreen()
-            Splash()
+            Generic.clearscreen()
+            splash()
             # Send any number/string in the Main Menu to trigger this test
-            Generic.SystemMsg('warning','Poggers')
-            Generic.SystemMsg('critical','Poggers')
-            Generic.SystemMsg('question','Poggers')
-            Generic.SystemMsg('neutral','Poggers')
+            Generic.popup.system('warning','Poggers')
+            Generic.popup.system('critical','Poggers')
+            Generic.popup.system('question','Poggers')
+            Generic.popup.system('neutral','Poggers')
 
-def GameLoop():
-    global looping
-    while looping:
+def gameloop():
+    global gamelooping
+    while gamelooping:
         if Generic.AudSys.audio.music.get_busy() == True:
             console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy()))
             pass
         else:
-            Generic.AudSys.Music(filename="Dark-main-menu-song-REV1.ogg", play=True).Load()
+            Generic.AudSys.music.load("Dark-main-menu-song-REV1.ogg", True)
         MainMenu = """
                             [green][1] New Game[/green]
                             [yellow][2] Load Game[/yellow]
@@ -77,17 +79,16 @@ def GameLoop():
                             [red][4] Exit[/red]
                     """
         # printmd(f"[italic red]{MainMenu}[/italic red] Poggers")
-        leaveterms = ["quit","leave","exit"]
         try:
             Generic.printmd(MainMenu)
-            selection = input('>> ')
+            ans = input('>> ')
             # Extra.Fun(selection) is for funny
-            Extra.Fun(selection)
-            Selection(int(selection))
+            Extra.Fun(ans)
+            selection(int(ans))
         except Exception as ERR:
-            Generic.ClearScreen()
-            console.log(f"Selection Error: {ERR} is given.")
-            Splash()
+            Generic.clearscreen()
+            console.log(ERR)
+            splash()
 
 # Game will be based on a reputation system, reputation of the player to each character introduced.
 
@@ -98,10 +99,10 @@ def GameLoop():
 
 # create a separate .py file to display images perhaps using tkinter's GUI !
 
-Splash()
-GameInit()
+splash()
+gameinit()
 
-GameLoop()
+gameloop()
 
 Generic.printmd("[red]Game Closed[/red]")
-Generic.Wait(2)
+Generic.wait(2)

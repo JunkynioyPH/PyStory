@@ -3,40 +3,42 @@ import App.AudSys as AudSys
 from rich.console import Console
 console = Console()
 
-def Wait(Duration):
+def wait(Duration):
     # Integer or Float.
     time.sleep(Duration)
 
-def ClearScreen():
+def clearscreen():
     os.system('cls' if os.name=='nt' else 'clear')
-
-def MessageBox(Title, Subtitle, Message, Button="OK", Duration=120):
-    TITLE, SUBTITLE, MESSAGE, BUTTON = Title.replace('"','\\"'), Subtitle.replace('"','\\"'), Message.replace('"','\\"'), Button.replace('"','\\"')
-    os.system(f'.\App\MessageBox.pyw "{TITLE}" "{SUBTITLE}" "{MESSAGE}" {Duration} "{BUTTON}"')
-
-def SystemMsg(Type, Message, Sfx=''):
-    Type = Type.lower()
-    match Type:
-        case "warning": 
-            AudSys.SoundFX(filename='ErrExclamation.wav').Play()
-            MessageBox('System','Warning',f"{Message}")
-        case "critical":
-            AudSys.SoundFX(filename='ErrCritStop.wav').Play()
-            MessageBox('System','Critical',f"{Message}")
-        case "question":
-            AudSys.SoundFX(filename='ErrQuestion.wav').Play()
-            MessageBox('System','Question',f"{Message}")
-        case "neutral":
-            AudSys.SoundFX(filename='ErrAsterisk.wav').Play()
-            MessageBox('System','Information',f"{Message}")
-        case _:
-            MessageBox('System','Message',f"{Message}")
-
-def ImageBox():
-    print('work in progress')
 
 def printmd(String):
     rich.print(String)
+
+class popup:
+    def message(Title, Subtitle, Message, Button="OK", Duration=120):
+        TITLE, SUBTITLE, MESSAGE, BUTTON = Title.replace('"','\\"'), Subtitle.replace('"','\\"'), Message.replace('"','\\"'), Button.replace('"','\\"')
+        os.system(f'.\App\MessageBox.pyw "{TITLE}" "{SUBTITLE}" "{MESSAGE}" {Duration} "{BUTTON}"')
+
+    def system(Type, Message, Sfx=''):
+        Type = Type.lower()
+        match Type:
+            case "warning": 
+                AudSys.soundfx.play('ErrExclamation.wav')
+                popup.message('System','Warning',f"{Message}")
+            case "critical":
+                AudSys.soundfx.play('ErrCritStop.wav')
+                popup.message('System','Critical',f"{Message}")
+            case "question":
+                AudSys.soundfx.play('ErrQuestion.wav')
+                popup.message('System','Question',f"{Message}")
+            case "neutral":
+                AudSys.soundfx.play('ErrAsterisk.wav')
+                popup.message('System','Information',f"{Message}")
+            case _:
+                AudSys.soundfx.play(Sfx)
+                popup.message('System','Message',f"{Message}")
+
+    def image():
+        print('work in progress')
 
 # perform loading save data (which chapter, perhaps where in the chapter(might add a counter for that), reputation for each character)
 # show loading screen showing a list of save-SaveName.json files in SAVES folder
