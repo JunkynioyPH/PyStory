@@ -2,10 +2,4 @@
 
 # Settings
 
-
-
-# ClearScreen()
-# Settings().ass()
-ass().huh()
-
 print("after")
