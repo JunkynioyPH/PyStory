@@ -13,6 +13,10 @@ def clearscreen():
 def printmd(String):
     rich.print(String)
 
+def ask(string):
+    printmd(string)
+    return input()
+
 class popup:
     def message(Title, Subtitle, Message, Button="OK", Duration=120):
         TITLE, SUBTITLE, MESSAGE, BUTTON = Title.replace('"','\\"'), Subtitle.replace('"','\\"'), Message.replace('"','\\"'), Button.replace('"','\\"')

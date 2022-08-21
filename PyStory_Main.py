@@ -6,7 +6,10 @@ import App.Extra as Extra
 pretty.install()
 
 Generic.clearscreen()
-os.system('title PyStory - Junkynioy#2408')
+if os.name=='nt':
+    os.system('title PyStory - Junkynioy#2408')
+else:
+    Generic.printmd("\n[green]PyStory - Junkynioy#2408[/green]\n")
 
 # Settings(): function, Perhaps use JSON
 
@@ -49,7 +52,7 @@ def selection(Option):
             Generic.clearscreen()
             Generic.Settings()
         case 4:
-            if input('Are you Sure? [y/n] >> ').lower() == 'y':
+            if Generic.ask('[yellow]Are you[/yellow] [green]Sure?[/green] [[green]y[/green]/[red]n[/red]] [pink]>>[/pink] ').lower() == 'y':
                 gamelooping = False
             else:
                 Generic.clearscreen()
