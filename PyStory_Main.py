@@ -26,21 +26,21 @@ def splash():
   ░   ░   ▒   ▒▒ ░░  ░      ░ ░ ░  ░       ░     ▒ ░    ░    ░ ░ ▒  ░ ░ ░  ░
 ░ ░   ░   ░   ▒   ░      ░      ░        ░       ▒ ░  ░        ░ ░      ░
       ░       ░  ░       ░      ░  ░             ░               ░  ░   ░  ░
-http://www.patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=Game%20Title\n"""
+http://www.patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=Game%20Title"""
     Generic.cmdline.printmd(splashText)
 
 def gameinit():
-    global gamelooping
+    global menuloop
     # load volume from settings
     # Generic.LoadSave() somewhere in the main menu
     Generic.AudSys.audiosysteminit(25) # 25%
-    gamelooping = True
+    menuloop = True
 
     # use [['text1'],[text2]] .py list for Dialogues
     # ChapterX.py which contains a list of dialogue for that chapter
 
 def selection(Option):
-    global gamelooping
+    global menuloop
     match Option:
         case 1:
             Generic.cmdline.clearscreen()
@@ -53,7 +53,7 @@ def selection(Option):
             Generic.Settings()
         case 4:
             if Generic.ask('[yellow]Are you[/yellow] [green]Sure?[/green] [[green]y[/green]/[red]n[/red]] [pink]>>[/pink] ').lower() == 'y':
-                gamelooping = False
+                menuloop = False
             else:
                 Generic.cmdline.clearscreen()
                 print('Returning to Menu')
@@ -69,18 +69,23 @@ def selection(Option):
             Generic.popup.system('neutral','Poggers')
 
 def gameloop():
-    global gamelooping
-    while gamelooping:
+    global menuloop
+    while menuloop:
         if Generic.AudSys.audio.music.get_busy() == True:
             pass
         else:
             Generic.AudSys.music.load("Dark-main-menu-song-REV1.ogg", True)
-        MainMenu = "                            [green][1] New Game[/green]\n                            [yellow][2] Load Game[/yellow]\n                            [blue][3] Settings[/blue]\n                            [red][4] Exit[/red]\n"
+        MainMenu =  """
+                            [green][1] New Game[/green]
+                            [yellow][2] Load Game[/yellow]
+                            [blue][3] Settings[/blue]
+                            [red][4] Exit[/red]
+                    \n"""
         # printmd(f"[italic red]{MainMenu}[/italic red] Poggers")
         try:
             print()
             console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy()))
-            Generic.cmdline.dialog(MainMenu, 5, "menu")
+            Generic.cmdline.dialog(MainMenu, 5, "multi")
             Generic.cmdline.dialog('this is also vert poggers testing a string render thing',50)
             ans = input('\n>> ')
             # Extra.Fun(selection) is for funny
@@ -90,6 +95,8 @@ def gameloop():
             Generic.cmdline.clearscreen()
             console.log(ERR)
             splash()
+    # then the game stuff initialises here
+
 
 # Game will be based on a reputation system, reputation of the player to each character introduced.
 

@@ -23,7 +23,7 @@ class cmdline:
             sys.stdout.flush()
             letter += 1 
             time.sleep(float(dur)/1000)
-        sys.stdout.write('\r\x1b[1A\x1b[2K' * (len(string.split('\n')) - 1)) if how.lower() == "menu" else sys.stdout.write("\r\x1b[2K")
+        sys.stdout.write('\r\x1b[1A\x1b[2K' * (len(string.split('\n')) - 1)) if how.lower() == "multi" else sys.stdout.write("\r\x1b[2K")
         cmdline.printmd(f"\r{string}")
 
 
