@@ -5,7 +5,7 @@ import App.Generic as Generic
 import App.Extra as Extra
 pretty.install()
 
-Generic.clearscreen()
+Generic.cmdline.clearscreen()
 if os.name=='nt':
     os.system('title PyStory - Junkynioy#2408')
 else:
@@ -26,8 +26,8 @@ def splash():
   ░   ░   ▒   ▒▒ ░░  ░      ░ ░ ░  ░       ░     ▒ ░    ░    ░ ░ ▒  ░ ░ ░  ░
 ░ ░   ░   ░   ▒   ░      ░      ░        ░       ▒ ░  ░        ░ ░      ░
       ░       ░  ░       ░      ░  ░             ░               ░  ░   ░  ░
-http://www.patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=Game%20Title"""
-    print(splashText)
+http://www.patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=Game%20Title\n"""
+    Generic.cmdline.printmd(splashText)
 
 def gameinit():
     global gamelooping
@@ -43,25 +43,26 @@ def selection(Option):
     global gamelooping
     match Option:
         case 1:
-            Generic.clearscreen()
+            Generic.cmdline.clearscreen()
             Generic.NewGame()
         case 2:
-            Generic.clearscreen()
+            Generic.cmdline.clearscreen()
             Generic.LoadFile()
         case 3:
-            Generic.clearscreen()
+            Generic.cmdline.clearscreen()
             Generic.Settings()
         case 4:
             if Generic.ask('[yellow]Are you[/yellow] [green]Sure?[/green] [[green]y[/green]/[red]n[/red]] [pink]>>[/pink] ').lower() == 'y':
                 gamelooping = False
             else:
-                Generic.clearscreen()
+                Generic.cmdline.clearscreen()
                 print('Returning to Menu')
                 splash()
         case _:
-            Generic.clearscreen()
+            Generic.cmdline.clearscreen()
             splash()
             # Send any number/string in the Main Menu to trigger this test
+            Generic.cmdline.dialog('this is a testing typing string!','typing',25)
             Generic.popup.system('warning','Poggers')
             Generic.popup.system('critical','Poggers')
             Generic.popup.system('question','Poggers')
@@ -71,25 +72,22 @@ def gameloop():
     global gamelooping
     while gamelooping:
         if Generic.AudSys.audio.music.get_busy() == True:
-            console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy()))
             pass
         else:
             Generic.AudSys.music.load("Dark-main-menu-song-REV1.ogg", True)
-        MainMenu = """
-                            [green][1] New Game[/green]
-                            [yellow][2] Load Game[/yellow]
-                            [blue][3] Settings[/blue]
-                            [red][4] Exit[/red]
-                    """
+        MainMenu = "                            [green][1] New Game[/green]\n                            [yellow][2] Load Game[/yellow]\n                            [blue][3] Settings[/blue]\n                            [red][4] Exit[/red]\n"
         # printmd(f"[italic red]{MainMenu}[/italic red] Poggers")
         try:
-            Generic.printmd(MainMenu)
-            ans = input('>> ')
+            print()
+            console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy()))
+            Generic.cmdline.dialog(MainMenu, "menu", 5, 4)
+            Generic.cmdline.dialog('this is also vert poggers testing a string render thing', "typing",50)
+            ans = input('\n>> ')
             # Extra.Fun(selection) is for funny
             Extra.Fun(ans)
             selection(int(ans))
         except Exception as ERR:
-            Generic.clearscreen()
+            Generic.cmdline.clearscreen()
             console.log(ERR)
             splash()
 
@@ -107,5 +105,5 @@ gameinit()
 
 gameloop()
 
-Generic.printmd("[red]Game Closed[/red]")
+Generic.cmdline.printmd("[red]Game Closed[/red]")
 Generic.wait(2)

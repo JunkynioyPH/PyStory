@@ -1,21 +1,55 @@
-import os, time, rich, json
+import os, time, rich, sys, json
 import App.AudSys as AudSys
 from rich.console import Console
 console = Console()
+
+class cmdline:
+    def clearscreen():
+        os.system('cls' if os.name=='nt' else 'clear')
+
+    def printmd(String):
+        rich.print(String, end="")
+    
+    # this is so scuffed
+    #
+    # implement this counting thing:
+    # https://stackoverflow.com/questions/28802417/how-to-count-lines-in-multi-lined-strings
+    #
+    def dialog(string, how ="typing", dur=0.125, lines=1):
+        match how.lower():
+            case "menu":
+                letter = 1
+                while letter <= len(string):
+                    new_string = string[letter-1:letter]
+                    cmdline.printmd(new_string)
+                    sys.stdout.flush()
+                    letter += 1 
+                    time.sleep(float(dur)/1000)
+                sys.stdout.write('\r\x1b[1A\x1b[2K'*lines)
+                cmdline.printmd(f"\r{string}")
+            case "typing":
+                letter = 1
+                while letter <= len(string):
+                    new_string = string[letter-1:letter]
+                    cmdline.printmd(new_string)
+                    sys.stdout.flush()
+                    letter += 1 
+                    time.sleep(float(dur)/1000)
+                sys.stdout.write("\r\x1b[2K")
+                cmdline.printmd(f"\r{string}")
+            case _:
+                cmdline.printmd(string)
+                wait(dur)
+
 
 def wait(Duration):
     # Integer or Float.
     time.sleep(Duration)
 
-def clearscreen():
-    os.system('cls' if os.name=='nt' else 'clear')
-
-def printmd(String):
-    rich.print(String)
-
 def ask(string):
-    printmd(string)
+    cmdline.printmd(string)
     return input()
+
 
 class popup:
     def message(Title, Subtitle, Message, Button="OK", Duration=120):
