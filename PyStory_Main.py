@@ -85,9 +85,8 @@ def gameloop():
         try:
             print()
             console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy()))
-            Generic.cmdline.dialog(MainMenu, 5, "multi")
-            Generic.cmdline.dialog('this is also vert poggers testing a string render thing',50)
-            ans = input('\n>> ')
+            Generic.cmdline.dialog(MainMenu, 5)
+            ans = Generic.ask('                          >> ')
             # Extra.Fun(selection) is for funny
             Extra.Fun(ans)
             selection(int(ans))
@@ -101,7 +100,7 @@ def gameloop():
 # Game will be based on a reputation system, reputation of the player to each character introduced.
 
 # Use json for saving reputation in Global Use inside .\Assets\GlobalVariables
-# instead of the above use of jeson for reputation, create some sort of json save-file format for saving
+# instead of the above use of json for reputation, create some sort of json save-file format for saving
 # data, and use a separate folder in .\Assets for loading in saves to keep the saves un-altered unless
 # the player saved the game
 

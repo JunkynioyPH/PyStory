@@ -15,7 +15,7 @@ class cmdline:
     # implement this counting thing:
     # https://stackoverflow.com/questions/28802417/how-to-count-lines-in-multi-lined-strings
     #
-    def dialog(string, dur=125, how="typing"):
+    def dialog(string, dur=125, multi=True):
         letter = 1
         while letter <= len(string):
             new_string = string[letter-1:letter]
@@ -23,8 +23,8 @@ class cmdline:
             sys.stdout.flush()
             letter += 1 
             time.sleep(float(dur)/1000)
-        sys.stdout.write('\r\x1b[1A\x1b[2K' * (len(string.split('\n')) - 1)) if how.lower() == "multi" else sys.stdout.write("\r\x1b[2K")
-        cmdline.printmd(f"\r{string}")
+        sys.stdout.write('\r\x1b[1A\x1b[2K' * (len(string.split('\n')) - 1)) if multi != False else sys.stdout.write("\r\x1b[2K") # \x1b[2K == delete
+        cmdline.printmd(f"\r{string}") if multi != False else ''
 
 
 def wait(Duration):
