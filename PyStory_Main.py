@@ -62,7 +62,7 @@ def selection(Option):
             Generic.cmdline.clearscreen()
             splash()
             # Send any number/string in the Main Menu to trigger this test
-            Generic.cmdline.dialog('this is a testing typing string!','typing',25)
+            Generic.cmdline.dialog('this is a testing typing string!',25)
             Generic.popup.system('warning','Poggers')
             Generic.popup.system('critical','Poggers')
             Generic.popup.system('question','Poggers')
@@ -80,8 +80,8 @@ def gameloop():
         try:
             print()
             console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy()))
-            Generic.cmdline.dialog(MainMenu, "menu", 5, 4)
-            Generic.cmdline.dialog('this is also vert poggers testing a string render thing', "typing",50)
+            Generic.cmdline.dialog(MainMenu, 5, "menu")
+            Generic.cmdline.dialog('this is also vert poggers testing a string render thing',50)
             ans = input('\n>> ')
             # Extra.Fun(selection) is for funny
             Extra.Fun(ans)
