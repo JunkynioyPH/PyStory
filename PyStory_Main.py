@@ -76,10 +76,10 @@ def gameloop():
         else:
             Generic.AudSys.music.load("Dark-main-menu-song-REV1.ogg", True)
         MainMenu =  """
-                            [green][1] New Game[/green]
-                            [yellow][2] Load Game[/yellow]
-                            [blue][3] Settings[/blue]
-                            [red][4] Exit[/red]
+                            [bold green][1] New Game[/bold green]
+                            [bold yellow][2] Load Game[/bold yellow]
+                            [bold blue][3] Settings[/bold blue]
+                            [bold red][4] Exit[/bold red]
                     \n"""
         # printmd(f"[italic red]{MainMenu}[/italic red] Poggers")
         try:
