@@ -5,9 +5,19 @@ import App.Generic as Generic
 import App.Extra as Extra
 pretty.install()
 
+# # https://stackoverflow.com/questions/64376497/disable-resizing-for-python-console-application-in-windows
+# def lock_resize():
+#     while True:
+#         os.system('mode con cols=210 lines=45')
+# # threading.Thread(target=lock_resize(), args=(1,), daemon=True).start()
+# _thread.start_new_thread(lock_resize,()) #using the _thread module to keep everything else running
+#
+# I Guess I know how to Multithread now, i guess. or atleast i know how to start one
+
 Generic.cmdline.clearscreen()
 if os.name=='nt':
     os.system('title PyStory - Junkynioy#2408')
+    os.system('mode con cols=210 lines=45')
 else:
     Generic.printmd("\n[green]PyStory - Junkynioy#2408[/green]\n")
 
@@ -61,8 +71,24 @@ def selection(Option):
         case _:
             Generic.cmdline.clearscreen()
             splash()
-            # Send any number/string in the Main Menu to trigger this test
-            Generic.cmdline.dialog('this is a testing typing string!',25)
+            # Send any number in the Main Menu to trigger this test
+            Generic.cmdline.dialog(char='system', str='this is a testing typing string!', dur=25)
+            Generic.cmdline.dialog(char='[green]system style[/green]', str='character [red]dialogue style[/red]', dur=25)
+            Generic.cmdline.dialog(char='[red]system style[/red]', str='character dialogue', dur=25)
+            Generic.cmdline.dialog(char='no-style', str='gamer gaming', dur=25)
+            Generic.cmdline.dialog(str='[red]No character[/red] [blue]no style[/blue]', dur=25)
+            long_text = """
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Sed adipiscing diam donec adipiscing tristique risus. Sed lectus vestibulum mattis ullamcorper velit sed ullamcorper.
+            Volutpat ac tincidunt vitae semper quis lectus nulla.
+            Integer feugiat scelerisque varius morbi enim nunc faucibus.
+            Rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat.
+            Fermentum odio eu feugiat pretium nibh ipsum consequat.
+            Adipiscing elit pellentesque habitant morbi tristique senectus et.
+            Vel pharetra vel turpis nunc eget lorem.
+            Purus faucibus ornare suspendisse sed nisi lacus. Donec massa sapien faucibus et molestie.
+            """
+            Generic.cmdline.dialog(char='[green]Lorem Ipsum[/green]', str=f'[red]{long_text}[/red]', dur=3.125)
             Generic.popup.system('warning','Poggers')
             Generic.popup.system('critical','Poggers')
             Generic.popup.system('question','Poggers')
@@ -85,8 +111,8 @@ def gameloop():
         try:
             print()
             console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy()))
-            Generic.cmdline.dialog(MainMenu, 5)
-            ans = Generic.ask('                          >> ')
+            Generic.cmdline.dialog(str=MainMenu, dur=2.5)
+            ans = Generic.ask('                        >>   ')
             # Extra.Fun(selection) is for funny
             Extra.Fun(ans)
             selection(int(ans))

@@ -10,21 +10,24 @@ class cmdline:
     def printmd(String):
         rich.print(String, end="")
     
-    # this is so scuffed
+    # this is so scuffeds
     #
     # implement this counting thing:
     # https://stackoverflow.com/questions/28802417/how-to-count-lines-in-multi-lined-strings
     #
-    def dialog(string, dur=125, multi=True):
+    def dialog(char='', str='', dur=125):
+        line_count = len(list(str.split('\n'))) - 2
+        full_str = f"<{char}>  {str}"
         letter = 1
-        while letter <= len(string):
-            new_string = string[letter-1:letter]
-            cmdline.printmd(new_string)
+        while letter <= len(str):
+            new_str = full_str[letter-1:letter]
+            cmdline.printmd(new_str)
             sys.stdout.flush()
             letter += 1 
             time.sleep(float(dur)/1000)
-        sys.stdout.write('\r\x1b[1A\x1b[2K' * (len(string.split('\n')) - 1)) if multi != False else sys.stdout.write("\r\x1b[2K") # \x1b[2K == delete
-        cmdline.printmd(f"\r{string}") if multi != False else ''
+        cmdline.printmd(line_count)
+        sys.stdout.write('\r\x1b[1A\x1b[2K' * line_count) if line_count != -1 else sys.stdout.write('\r\x1b[2K') # \x1b[2K == delete \x1b[1A == UP ARROW ---- \r\x1b[2K
+        cmdline.printmd(f"\r{full_str}") if line_count != -1 else cmdline.printmd(f"\r{full_str}\n")
 
 
 def wait(Duration):
