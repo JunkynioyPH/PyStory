@@ -7,32 +7,40 @@ class cmdline:
     def clearscreen():
         os.system('cls' if os.name=='nt' else 'clear')
 
-    def printmd(String):
-        rich.print(String, end="")
+    def printmd(String, end=''):
+        rich.print(String, end=f"{end}")
     
     # this is so scuffeds
     #
     # implement this counting thing:
     # https://stackoverflow.com/questions/28802417/how-to-count-lines-in-multi-lined-strings
     #
-    def dialog(char='', str='', dur=125):
-        line_count = len(list(str.split('\n'))) - 2
-        full_str = f"<{char}>  {str}"
-        letter = 1
-        while letter <= len(str):
-            new_str = full_str[letter-1:letter]
-            cmdline.printmd(new_str)
-            sys.stdout.flush()
-            letter += 1 
-            time.sleep(float(dur)/1000)
-        cmdline.printmd(line_count)
-        sys.stdout.write('\r\x1b[1A\x1b[2K' * line_count) if line_count != -1 else sys.stdout.write('\r\x1b[2K') # \x1b[2K == delete \x1b[1A == UP ARROW ---- \r\x1b[2K
-        cmdline.printmd(f"\r{full_str}") if line_count != -1 else cmdline.printmd(f"\r{full_str}\n")
+    def dialog(char='', str='', dur=60, spc=0):
+        if spc < 1:
+            line_count = len(list(str.split('\n'))) - 2
+            full_str = f"<{char}>  {str}"
+            letter = 1
+            while letter <= len(str):
+                new_str = full_str[letter-1:letter]
+                cmdline.printmd(new_str)
+                sys.stdout.flush()
+                letter += 1 
+                time.sleep(float(dur)/1000)
+            cmdline.printmd(line_count)
+            sys.stdout.write('\r\x1b[1A\x1b[2K' * line_count) if line_count != -1 else sys.stdout.write('\r\x1b[2K') # \x1b[2K == delete \x1b[1A == UP ARROW ---- \r\x1b[2K
+            cmdline.printmd(f"\r{full_str}") if line_count != -1 else cmdline.printmd(f"\r{full_str}\n")
+        else:
+            cmdline.printmd('\n'*spc)
 
 
-def wait(Duration):
+def wait(Duration, msg=False,):
     # Integer or Float.
-    time.sleep(Duration)
+    if msg == False:
+        time.sleep(Duration)
+    else:
+        cmdline.dialog(char='SYSTEM CALL', str=f'Waiting... [{Duration}s]')
+        cmdline.dialog(spc=1)
+        time.sleep(Duration)
 
 def ask(string):
     cmdline.printmd(string)

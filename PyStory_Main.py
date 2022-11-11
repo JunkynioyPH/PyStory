@@ -68,10 +68,13 @@ def selection(Option):
                 Generic.cmdline.clearscreen()
                 print('Returning to Menu')
                 splash()
-        case _:
+        case 20:
             Generic.cmdline.clearscreen()
             splash()
             # Send any number in the Main Menu to trigger this test
+            Generic.cmdline.dialog(char='SYSTEM CALL', str='Performing the series of tests!')
+            Generic.cmdline.dialog(spc=2)
+            Generic.wait(4, msg=True)
             Generic.cmdline.dialog(char='system', str='this is a testing typing string!', dur=25)
             Generic.cmdline.dialog(char='[green]system style[/green]', str='character [red]dialogue style[/red]', dur=25)
             Generic.cmdline.dialog(char='[red]system style[/red]', str='character dialogue', dur=25)
@@ -93,6 +96,10 @@ def selection(Option):
             Generic.popup.system('critical','Poggers')
             Generic.popup.system('question','Poggers')
             Generic.popup.system('neutral','Poggers')
+        case _:
+            Generic.cmdline.clearscreen()
+            splash()
+            Generic.cmdline.dialog(char='SYSTEM CALL', str='[red]Invalid Selection![/red]', dur=30)
 
 def gameloop():
     global menuloop
@@ -110,7 +117,7 @@ def gameloop():
         # printmd(f"[italic red]{MainMenu}[/italic red] Poggers")
         try:
             print()
-            console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy()))
+            console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy())) ####
             Generic.cmdline.dialog(str=MainMenu, dur=2.5)
             ans = Generic.ask('                        >>   ')
             # Extra.Fun(selection) is for funny
@@ -118,7 +125,7 @@ def gameloop():
             selection(int(ans))
         except Exception as ERR:
             Generic.cmdline.clearscreen()
-            console.log(ERR)
+            Generic.cmdline.dialog(char='SYSTEM CALL', str=f'[red]{ERR}[/red]', dur=15)
             splash()
     # then the game stuff initialises here
 
