@@ -27,7 +27,12 @@ class cmdline:
                 letter += 1 
                 time.sleep(float(dur)/1000)
             cmdline.printmd(line_count)
+
+            # might be able to be written better with code below:
+            # print('\b' * len(positionStr), end='', flush=True)
             sys.stdout.write('\r\x1b[1A\x1b[2K' * line_count) if line_count != -1 else sys.stdout.write('\r\x1b[2K') # \x1b[2K == delete \x1b[1A == UP ARROW ---- \r\x1b[2K
+            ##
+
             cmdline.printmd(f"\r{full_str}") if line_count != -1 else cmdline.printmd(f"\r{full_str}\n")
         else:
             cmdline.printmd('\n'*spc)
