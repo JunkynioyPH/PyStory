@@ -1,4 +1,5 @@
 # PyStory
+
 A **[Text-based Visual-Novel Date-sim RPG Horror Scary???]**  type game Written in Python
 
 Biggest project I've worked on yet!
@@ -23,4 +24,5 @@ Requires **pygame** to be installed.
 Requires **rich** to be installed.
 
 # Fingers Crossed
+
 Hope that everything works as it should!
