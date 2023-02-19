@@ -1,6 +1,6 @@
 # PyStory
 
-A Text-based Visual-Novel Date-sim type game Written in Python
+A **[Text-based Visual-Novel Date-sim RPG Horror Scary???]**  type game Written in Python
 
 Biggest project I've worked on yet!
 
