@@ -109,17 +109,17 @@ def gameloop():
         else:
             Generic.AudSys.music.load("Dark-main-menu-song-REV1.ogg", True)
         MainMenu =  """
-                            [bold green][1] New Game[/bold green]
-                            [bold yellow][2] Load Game[/bold yellow]
-                            [bold blue][3] Settings[/bold blue]
-                            [bold red][4] Exit[/bold red]
+                    [bold green][1] New Game[/bold green]
+                    [bold yellow][2] Load Game[/bold yellow]
+                    [bold blue][3] Settings[/bold blue]
+                    [bold red][4] Exit[/bold red]
                     \n"""
         # printmd(f"[italic red]{MainMenu}[/italic red] Poggers")
         try:
             print()
             console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy())) ####
-            Generic.cmdline.dialog(str=MainMenu, dur=2.5)
-            ans = Generic.ask('                        >>   ')
+            Generic.cmdline.dialog(char="Select an option",str=MainMenu, dur=2.5)
+            ans = Generic.ask('                    >>   ')
             # Extra.Fun(selection) is for funny
             Extra.Fun(ans)
             selection(int(ans))
