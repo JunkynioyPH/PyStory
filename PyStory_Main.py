@@ -73,12 +73,12 @@ def selection(Option):
             splash()
             Generic.cmdline.dialog(char='SYSTEM CALL', str='Performing the series of tests!')
             Generic.cmdline.dialog(newline=2)
-            Generic.cmdline.dialog(char="Testing this poggers feature", str="hmmmm....... we are still waiting.... for the thing to load...... sad. unpoggers.", clr="red")
+            Generic.cmdline.dialog(char="Testing this poggers feature", str="hmmmm....... we are still waiting.... for the thing to load...... sad. unpoggers.", richmd="red")
             Generic.wait(4, msg=True)
             Generic.cmdline.dialog(char="[green]Minecraft Mod[/green]", str="System Info of the mod is", dur=15)
-            Generic.cmdline.dialog(str="currently, unavailable.", clr="red", dur=15)
+            Generic.cmdline.dialog(str="currently, unavailable.", richmd="red", dur=15)
             Generic.cmdline.dialog(str="This is something we plan to work on in the future!", dur=15)
-            Generic.cmdline.dialog(str="Stay Tuned!", clr="green")
+            Generic.cmdline.dialog(str="Stay Tuned!", richmd="green")
             Generic.cmdline.dialog(char='system', str='this is a testing typing string!', dur=25)
             Generic.cmdline.dialog(char='[green]system style[/green]', str='character dialogue style', dur=25)
             Generic.cmdline.dialog(char='[red]system style[/red]', str='character dialogue', dur=25)
@@ -96,7 +96,7 @@ def selection(Option):
             Purus faucibus ornare suspendisse sed nisi lacus. Donec massa sapien faucibus et molestie.
             """
             Long = """            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"""
-            Generic.cmdline.dialog(char='[green]Lorem Ipsum[/green]', str=f'{long_text}', dur=3.125) # clr="" causes newlines to not be placed!
+            Generic.cmdline.dialog(char='[green]Lorem Ipsum[/green]', str=f'{long_text}', dur=3.125) # richmd="" causes newlines to not be placed!
             Generic.cmdline.dialog(char='[green]Lorem Ipsum[/green]', str=f'{Long}', dur=3.125)
             Generic.wait(4)
             Generic.cmdline.dialog(char='TEST CHARACTER', str='this is a testing poggers poggers')

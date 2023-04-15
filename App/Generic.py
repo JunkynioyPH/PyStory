@@ -20,11 +20,11 @@ class cmdline:
     #
     # when char is undefined, omit <{char}>
     #
-    # dialog(char="test", str="poggers") \n dialog(str="poggers" clr="")
+    # dialog(char="test", str="poggers") \n dialog(str="poggers" richmd="")
     #
-    def dialog(char="", str="", dur=60, newline=0, bkspc=0, clr=""):
+    def dialog(char="", str="", dur=60, newline=0, bkspc=0, richmd=""):
         if newline < 1 and bkspc < 1:
-            print() if char != "" == clr else ""
+            print() if char != "" == richmd else ""
             # raw = f"<{char}> " + str if char != "" else str
             strbuffer = str.split()
             charbuffer = f"<{char}>"
@@ -47,16 +47,16 @@ class cmdline:
                             # cmdline.printmd("[green].[/green]")
                             pass
                     except:
-                        if _ == "." and clr == "":
+                        if _ == "." and richmd == "":
                             print()
                         #     cmdline.printmd(f"[yellow]<{_}[/yellow][blue]{word[letter-2]}>[/blue]")
                         # else:#
                         #     cmdline.printmd(f"[red]<{_}>[/red]")#
                         pass 
                     time.sleep(float(dur)/1000)
-                # print() if clr != "" else ""
-                print('\b \b'*len(word), end="", flush=True) if clr != "" else ""
-                cmdline.printmd(f"[{clr}]{word}[/{clr}]") if clr != "" else ""
+                # print() if richmd != "" else ""
+                print('\b \b'*len(word), end="", flush=True) if richmd != "" else ""
+                cmdline.printmd(f"[{richmd}]{word}[/{richmd}]") if richmd != "" else ""
                 cmdline.printmd(" ")
             pass
         elif newline >= 1 and bkspc < 1:
@@ -99,7 +99,7 @@ def wait(Duration, msg=False,):
         time.sleep(Duration)
     else:
         print()
-        cmdline.dialog(char='SYSTEM CALL', str=f'Waiting... [{Duration}s]', clr="yellow")
+        cmdline.dialog(char='SYSTEM CALL', str=f'Waiting... [{Duration}s]', richmd="yellow")
         cmdline.dialog(newline=1)
         time.sleep(Duration)
 
