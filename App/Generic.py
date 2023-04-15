@@ -11,9 +11,12 @@ class cmdline:
         rich.print(String, end=f"{end}")
     
     # this is so scuffeds
-    #
-    # implement this counting thing:
     # https://stackoverflow.com/questions/28802417/how-to-count-lines-in-multi-lined-strings
+    #
+    #
+    # ReWrite this to have a buffer for text + formatting, then .split() the buffer into a list;
+    # then print out each item in list then remove unformatted then print out formatted item
+    # implement deleting 1 character at a time instead of a full line [apr 7 2023]
     #
     def dialog(char='', str='', dur=60, spc=0):
         if spc < 1:
