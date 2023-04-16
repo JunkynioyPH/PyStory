@@ -71,7 +71,7 @@ def selection(Option):
         case _:
             Generic.cmdline.clearscreen()
             splash()
-            Generic.cmdline.dialog(char='SYSTEM CALL', str='[red]Invalid Selection![/red]', dur=30)
+            Generic.cmdline.rendertxt(char='SYSTEM CALL', str='[red]Invalid Selection![/red]', dur=30)
 
 def gameloop():
     global menuloop
@@ -97,7 +97,7 @@ def gameloop():
             selection(int(ans))
         except Exception as ERR:
             Generic.cmdline.clearscreen()
-            Generic.cmdline.rendertxt(char='SYSTEM CALL', str=f'{ERR}', dur=15, richmd="red")
+            Generic.cmdline.rendertxt(char='SYSTEM CALL', str=f'[red]{ERR}[/red]', dur=15)
             splash()
     # then the game stuff initialises here
 
