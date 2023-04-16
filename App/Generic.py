@@ -50,11 +50,10 @@ class cmdline:
                         if _ == "." and richmd == "":
                             print()
                         #     cmdline.printmd(f"[yellow]<{_}[/yellow][blue]{word[letter-2]}>[/blue]")
-                        # else:#
+                        # else:
                         #     cmdline.printmd(f"[red]<{_}>[/red]")#
                         pass 
                     time.sleep(float(dur)/1000)
-                # print() if richmd != "" else ""
                 print('\b \b'*len(word), end="", flush=True) if richmd != "" else ""
                 cmdline.printmd(f"[{richmd}]{word}[/{richmd}]") if richmd != "" else ""
                 cmdline.printmd(" ")
@@ -74,21 +73,13 @@ class cmdline:
     def rendertxt(char='', str='', dur=60, newline=0):
         if newline < 1:
             line_count = len(list(str.split('\n')))
-            full_str = f"<{char}>  {str}"
+            full_str = f"[{char}]  {str}" if char != "" else ""
             letter = 1
-            if char != "":
-                for letter in full_str:
-                    cmdline.printmd(letter)
-                    time.sleep(float(dur)/1000)
-                print()
-                cmdline.printmd(f"\x1b[1A\x1b[2K"*line_count + full_str)
-            # while letter <= len(str):
-            #     new_str = full_str[letter-1:letter]
-            #     cmdline.printmd(new_str)
-            #     letter += 1 
-            #     time.sleep(float(dur)/1000)
-            # sys.stdout.write('\r\x1b[1A\x1b[2K' * line_count) if line_count != -1 else sys.stdout.write('\r\x1b[2K') # \x1b[2K == delete \x1b[1A == UP ARROW ---- \r\x1b[2K
-            # cmdline.printmd(f"\r{full_str}") if line_count != -1 else cmdline.printmd(f"\r{full_str}\n")
+            for letter in full_str:
+                cmdline.printmd(letter)
+                time.sleep(float(dur)/1000)
+            print()
+            cmdline.printmd(f"\x1b[1A\x1b[2K"*line_count + full_str)
         else:
             cmdline.printmd('\n'*newline)
 
