@@ -1,6 +1,6 @@
 # PyStory
 
-A **A Base-Game Template that allows for creation of Text-based/Visual-Novel/Date-sim type game, with ease (for me at least))**
+**A Base-Game Template that allows for creation of Text-based/Visual-Novel/Date-sim type game, with ease (for me at least))**
 
 # Gist of its functionality
 
