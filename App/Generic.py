@@ -1,6 +1,7 @@
 import os, time, rich, sys, json
 import App.AudSys as AudSys
 from rich.console import Console
+from App.MessageBox import MsgBox
 console = Console()
 
 class cmdline:
@@ -102,7 +103,7 @@ def ask(string):
 class popup:
     def message(Title, Subtitle, Message, Button="OK", Duration=120):
         TITLE, SUBTITLE, MESSAGE, BUTTON = Title.replace('"','\\"'), Subtitle.replace('"','\\"'), Message.replace('"','\\"'), Button.replace('"','\\"')
-        os.system(f'.\App\MessageBox.pyw "{TITLE}" "{SUBTITLE}" "{MESSAGE}" {Duration} "{BUTTON}"')
+        MsgBox(TITLE, SUBTITLE, MESSAGE, BUTTON, Duration)
 
     def system(Type, Message, Sfx=''):
         Type = Type.lower()
