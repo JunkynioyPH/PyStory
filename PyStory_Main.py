@@ -97,7 +97,8 @@ def gameloop():
             selection(int(ans))
         except Exception as ERR:
             Generic.cmdline.clearscreen()
-            Generic.cmdline.rendertxt(char='SYSTEM CALL', str=f'[red]{ERR}[/red]', dur=15)
+            # Generic.cmdline.rendertxt(char='SYSTEM CALL', str=f'[red]{ERR}[/red]', dur=15)
+            console.log(ERR)
             splash()
     # then the game stuff initialises here
 

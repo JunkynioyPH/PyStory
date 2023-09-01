@@ -1,6 +1,7 @@
 import os, time, rich, sys, json
 import App.AudSys as AudSys
 from rich.console import Console
+from App.MessageBox import MsgBox
 console = Console()
 
 class cmdline:
@@ -22,7 +23,9 @@ class cmdline:
     #
     # dialog(char="test", str="poggers") \n dialog(str="poggers" richmd="")
     #
-    def dialog(char="", str="", dur=60, newline=0, bkspc=0, richmd=""):
+
+    def dialog(char="", str="", dur=60, newline=0, bkspc=0, richmd="", voice=''):
+        debug = 1
         if newline < 1 and bkspc < 1:
             print() if char != "" == richmd else ""
             # raw = f"<{char}> " + str if char != "" else str
@@ -33,7 +36,7 @@ class cmdline:
                     cmdline.printmd(letter)
                     time.sleep(float(dur)/1000)
                 print()
-                cmdline.printmd(f"\x1b[1A\x1b[2K<{char}>  ")
+                cmdline.printmd(f"\x1b[1A\x1b[2K<{char}>  ") ## issue in windows terminal
             # for each word in buffer
             for word in strbuffer:
                 letter = 1
@@ -44,14 +47,14 @@ class cmdline:
                     letter += 1
                     try:
                         if word[letter-1] == "." and word[letter-2] != ".":
-                            # cmdline.printmd("[green].[/green]")
+                            cmdline.printmd("[green].[/green]") if debug == 1 else ''
                             pass
                     except:
                         if _ == "." and richmd == "":
                             print()
-                        #     cmdline.printmd(f"[yellow]<{_}[/yellow][blue]{word[letter-2]}>[/blue]")
-                        # else:
-                        #     cmdline.printmd(f"[red]<{_}>[/red]")#
+                            cmdline.printmd(f"[yellow]<{_}[/yellow][blue]{word[letter-2]}>[/blue]") if debug == 1 else ''
+                        else:
+                            cmdline.printmd(f"[red]<{_}>[/red]") if debug == 1 else ''
                         pass 
                     time.sleep(float(dur)/1000)
                 print('\b \b'*len(word), end="", flush=True) if richmd != "" else ""
@@ -79,7 +82,7 @@ class cmdline:
                 cmdline.printmd(letter)
                 time.sleep(float(dur)/1000)
             print()
-            cmdline.printmd(f"\x1b[1A\x1b[2K"*line_count + full_str)
+            cmdline.printmd(f"\x1b[1A\x1b[2K"*line_count + full_str) ## issue in windows terminal
         else:
             cmdline.printmd('\n'*newline)
 
@@ -102,7 +105,7 @@ def ask(string):
 class popup:
     def message(Title, Subtitle, Message, Button="OK", Duration=120):
         TITLE, SUBTITLE, MESSAGE, BUTTON = Title.replace('"','\\"'), Subtitle.replace('"','\\"'), Message.replace('"','\\"'), Button.replace('"','\\"')
-        os.system(f'.\App\MessageBox.pyw "{TITLE}" "{SUBTITLE}" "{MESSAGE}" {Duration} "{BUTTON}"')
+        MsgBox(TITLE, SUBTITLE, MESSAGE, BUTTON, Duration)
 
     def system(Type, Message, Sfx=''):
         Type = Type.lower()

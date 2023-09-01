@@ -8,3 +8,4 @@ venv/*
 # These stuff is to ignore stuff from getting commited to main from HOST MACHINE
 *__pycache__*
 Settings.json
+useAutoPy2Exe.txt
