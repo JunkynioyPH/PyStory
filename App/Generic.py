@@ -25,7 +25,7 @@ class cmdline:
     #
 
     def dialog(char="", str="", dur=60, newline=0, bkspc=0, richmd="", voice=''):
-        debug = 1
+        debug = 0
         if newline < 1 and bkspc < 1:
             print() if char != "" == richmd else ""
             # raw = f"<{char}> " + str if char != "" else str
@@ -36,7 +36,7 @@ class cmdline:
                     cmdline.printmd(letter)
                     time.sleep(float(dur)/1000)
                 print()
-                cmdline.printmd(f"\x1b[1A\x1b[2K<{char}>  ") ## issue in windows terminal
+                cmdline.printmd(f"\x1b[1A\x1b[2K<{char}>  ") ## issue in windows terminal windows 11
             # for each word in buffer
             for word in strbuffer:
                 letter = 1
@@ -45,16 +45,17 @@ class cmdline:
                     _ = word[letter-1:letter]
                     cmdline.printmd(_)
                     letter += 1
+                    # Full stop detector, hardcoding \n formatting. when " . " is found as well as trailing "..." detectiona nd properly detecting the actual End of string.
                     try:
                         if word[letter-1] == "." and word[letter-2] != ".":
-                            cmdline.printmd("[green].[/green]") if debug == 1 else ''
+                            cmdline.printmd("[green].[/green]") if debug == 1 else '' # debug info
                             pass
                     except:
                         if _ == "." and richmd == "":
                             print()
-                            cmdline.printmd(f"[yellow]<{_}[/yellow][blue]{word[letter-2]}>[/blue]") if debug == 1 else ''
+                            cmdline.printmd(f"[yellow]<{_}[/yellow][blue]{word[letter-2]}>[/blue]") if debug == 1 else '' # debug info
                         else:
-                            cmdline.printmd(f"[red]<{_}>[/red]") if debug == 1 else ''
+                            cmdline.printmd(f"[red]<{_}>[/red]") if debug == 1 else '' # debug info
                         pass 
                     time.sleep(float(dur)/1000)
                 print('\b \b'*len(word), end="", flush=True) if richmd != "" else ""
@@ -73,16 +74,20 @@ class cmdline:
             cmdline.printmd("[red]You cannot use both \[newline] and \[bkspc] in dialog...[/red] [yellow]u dum? :clown:[/yellow]")
     
     # repurposed for JUST rendering on screen graphics art/menus unless until further notice
-    def rendertxt(char='', str='', dur=60, newline=0):
+    def rendertxt(title='', str='', dur=60, newline=0):
         if newline < 1:
             line_count = len(list(str.split('\n')))
-            full_str = f"[{char}]  {str}" if char != "" else ""
+            full_str = f"[{title}]  {str}" if title != "" else ""
             letter = 1
             for letter in full_str:
                 cmdline.printmd(letter)
                 time.sleep(float(dur)/1000)
-            print()
-            cmdline.printmd(f"\x1b[1A\x1b[2K"*line_count + full_str) ## issue in windows terminal
+            # as stated in this link https://learn.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences
+            # [F is to go to previous lines and [J is to delete lines after cursor
+            ## attempted fix, w11 terminal still prints [F and [J and not wanting to delete prev text.
+            ### DOES NOT WORK STILL
+            cmdline.printmd(f"\n" + "\033[A" * line_count + "\033[J" + f"{full_str}")
+            # time.sleep(5)
         else:
             cmdline.printmd('\n'*newline)
 
@@ -92,7 +97,7 @@ def wait(Duration, msg=False,):
     if msg == False:
         time.sleep(Duration)
     else:
-        print()
+        cmdline.dialog(newline=1)
         cmdline.dialog(char='SYSTEM CALL', str=f'Waiting... [{Duration}s]', richmd="yellow")
         cmdline.dialog(newline=1)
         time.sleep(Duration)

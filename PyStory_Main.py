@@ -17,7 +17,7 @@ pretty.install()
 Generic.cmdline.clearscreen()
 if os.name=='nt':
     os.system('title PyStory - Junkynioy#2408')
-    os.system('mode con cols=210 lines=45')
+    os.system('mode con cols=210 lines=45') # does not work with w11 terminal
 else:
     Generic.printmd("\n[green]PyStory - Junkynioy#2408[/green]\n")
 
@@ -71,7 +71,7 @@ def selection(Option):
         case _:
             Generic.cmdline.clearscreen()
             splash()
-            Generic.cmdline.rendertxt(char='SYSTEM CALL', str='[red]Invalid Selection![/red]', dur=30)
+            console.log("Invalid Selection!", highlight=True)
 
 def gameloop():
     global menuloop
@@ -90,7 +90,7 @@ def gameloop():
         try:
             print()
             console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy())) ####
-            Generic.cmdline.rendertxt(char="[bright_cyan]Select[/bright_cyan] an [bright_blue]option[/bright_Blue]",str=MainMenu, dur=2.5)
+            Generic.cmdline.rendertxt(title="[bright_cyan]Select[/bright_cyan] an [bright_blue]option[/bright_Blue]",str=MainMenu, dur=2.5)
             ans = Generic.ask('                    >>   ')
             # Extra.Fun(selection) is for funny
             Extra.Fun(ans)
