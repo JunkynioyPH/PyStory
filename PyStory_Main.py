@@ -91,7 +91,7 @@ def gameloop():
             print()
             console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy())) ####
             Generic.cmdline.rendertxt(title="[bright_cyan]Select[/bright_cyan] an [bright_blue]option[/bright_Blue]",str=MainMenu, dur=0.5)
-            ans = Generic.ask('                    >>   ')
+            ans = Generic.ask('                    >>  ')
             # Extra.Fun(selection) is for funny
             Extra.Fun(ans)
             selection(int(ans))
