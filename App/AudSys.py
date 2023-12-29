@@ -31,7 +31,7 @@ class music:
     def resume():
         audio.music.unpause()
 
-
+# might turn into a class that makes its own sfx instances, in reference to how i did the buttons on pysoundboard project.
 class soundfx:
     def play(filename):
         # What the actual heck,  thought you cant chain them together?????? ".play().set_volume(float)"
