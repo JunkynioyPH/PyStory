@@ -9,7 +9,8 @@ class cmdline:
     def clearscreen():
         os.system('cls' if os.name=='nt' else 'clear')
 
-    def printmd(String, end=''):
+    def printmd(String, end='', multiLine=True):
+        print(f"\b \b"*len(String), end='', flush=True) if multiLine == False else ''
         rich.print(String, end=f"{end}", flush=True)
     
     # this is so scuffeds
@@ -24,20 +25,28 @@ class cmdline:
     #
     # dialog(char="test", str="poggers") \n dialog(str="poggers" richmd="")
     #
+    # rich library ( cmdline.printmd() ) ABSOLUTELY HATES " \b " or similar ESCAPE CODES.  (on windows 11? but it does in windows 10???)
+    #
 
     def dialog(char="", str="", dur=60, newline=0, bkspc=0, richmd="", voice=''):
         debug = 0
-        if newline < 1 and bkspc < 1:
+        def delete():
+            for _ in range(bkspc+1):
+                print('\b \b', end="", flush=True)
+                # sys.stdout.write("\010")
+                # cmdline.printmd('\010')
+                time.sleep(float(dur)/1000)
+        def write():
+            def printf(str):
+                print(str, end='', flush=True)
             print() if char != "" == richmd else ""
-            # raw = f"<{char}> " + str if char != "" else str
             strbuffer = str.split()
             charbuffer = f"<{char}>"
             if char != "":
                 for letter in charbuffer:
                     cmdline.printmd(letter)
                     time.sleep(float(dur)/1000)
-                print()
-                cmdline.printmd(f"\x1b[1A\x1b[2K<{char}>  ") ## issue in windows terminal windows 11
+                cmdline.printmd(f"<{char}>  ", multiLine=False)
             # for each word in buffer
             for word in strbuffer:
                 letter = 1
@@ -49,33 +58,28 @@ class cmdline:
                     # Full stop detector, hardcoding \n formatting. when " . " is found as well as trailing "..." detectiona nd properly detecting the actual End of string.
                     try:
                         if word[letter-1] == "." and word[letter-2] != ".":
+                            printf('\b') if debug == 1 else ''
                             cmdline.printmd("[green].[/green]") if debug == 1 else '' # debug info
-                            pass
                     except:
                         if _ == "." and richmd == "":
                             print()
-                            cmdline.printmd(f"[yellow]<{_}[/yellow][blue]{word[letter-2]}>[/blue]") if debug == 1 else '' # debug info
+                            printf('\b'*2) if debug == 1 else ''
+                            cmdline.printmd(f"[yellow]{_}[/yellow][blue]{word[letter-2]}[/blue]") if debug == 1 else '' # debug info
                         else:
-                            cmdline.printmd(f"[red]<{_}>[/red]") if debug == 1 else '' # debug info
-                        pass 
+                            printf('\b') if debug == 1 else ''
+                            cmdline.printmd(f"[red]{_}[/red]") if debug == 1 else '' # debug info
                     time.sleep(float(dur)/1000)
-                print('\b \b'*len(word), end="", flush=True) if richmd != "" else ""
+                print('\b \b'*len(word), end="", flush=True) if richmd != "" else "" ## figure how to get rid of this line
                 cmdline.printmd(f"[{richmd}]{word}[/{richmd}]") if richmd != "" else ""
                 cmdline.printmd(" ")
-            pass
-        elif newline >= 1 and bkspc < 1:
-            cmdline.printmd('\n'*newline)
-        elif bkspc >= 1 and newline < 1:
-            for _ in range(bkspc+1):
-                print('\b \b', end="", flush=True)
-                # sys.stdout.write("\010")
-                # cmdline.printmd('\010')
-                time.sleep(float(dur)/1000)
-        else:
-            cmdline.printmd("[red]You cannot use both \[newline] and \[bkspc] in dialog...[/red] [yellow]u dum? :clown:[/yellow]")
+        # yeah it looks nicer but it's kinda no different to the regular if-elif-else statements
+        write() if newline < 1 and bkspc < 1 else ''
+        delete() if bkspc >= 1 and newline < 1 else ''
+        cmdline.printmd('\n'*newline) if newline >= 1 and bkspc < 1 else ''
+        cmdline.printmd("[red]You cannot use both \[newline] and \[bkspc] in dialog...[/red] [yellow]u dum? :clown:[/yellow]") if newline > 1 and bkspc > 1 else ''
     
     # repurposed for JUST rendering on screen graphics art/menus unless until further notice
-    def rendertxt(title='', str='', dur=60, newline=0):
+    def rendertxt(title='', str='', dur=0.5, newline=0):
         if newline < 1:
             line_count = len(list(str.split('\n')))
             full_str = f"[{title}]  {str}" if title != "" else ""
@@ -83,11 +87,8 @@ class cmdline:
             for letter in full_str:
                 cmdline.printmd(letter)
                 time.sleep(float(dur)/1000)
-            # as stated in this link https://learn.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences
-            # [F is to go to previous lines and [J is to delete lines after cursor
-            ## attempted fix, w11 terminal still prints [F and [J and not wanting to delete prev text.
-            ### DOES NOT WORK STILL
-            cmdline.printmd(f"\n" + "\033[A" * line_count + "\033[J" + f"{full_str}")
+            print(f"\n" + "\x1b[1A\x1b[2K" * line_count, end='', flush=True)
+            cmdline.printmd(f"{full_str}")
             # time.sleep(5)
         else:
             cmdline.printmd('\n'*newline)
@@ -99,7 +100,7 @@ def wait(Duration, msg=False,):
         time.sleep(Duration)
     else:
         cmdline.dialog(newline=1)
-        cmdline.dialog(char='SYSTEM CALL', str=f'Waiting... [{Duration}s]', richmd="yellow")
+        cmdline.dialog(char='SYSTEM', str=f'Waiting... [{Duration}s]', richmd="yellow")
         cmdline.dialog(newline=1)
         time.sleep(Duration)
 
