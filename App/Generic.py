@@ -2,7 +2,7 @@ import os, time, rich, sys, json
 import App.AudSys as AudSys
 from rich.console import Console
 from App.MessageBox import MsgBox
-from App.MessageBox import MsgBox
+
 console = Console()
 
 class cmdline:
