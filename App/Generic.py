@@ -16,16 +16,9 @@ class cmdline:
     # this is so scuffeds
     # https://stackoverflow.com/questions/28802417/how-to-count-lines-in-multi-lined-strings
     #
-    #
-    #
-    # ** then print out each item in list then remove unformatted then print out formatted item
-    # implement deleting 1 character at a time instead of a full line [apr 7 2023]
-    #
-    # when char is undefined, omit <{char}>
-    #
     # dialog(char="test", str="poggers") \n dialog(str="poggers" richmd="")
     #
-    # rich library ( cmdline.printmd() ) ABSOLUTELY HATES " \b " or similar ESCAPE CODES.  (on windows 11? but it does in windows 10???)
+    # rich library ( cmdline.printmd() ) ABSOLUTELY HATES " \b " or similar ESCAPE CODES.  (doesnt on windows 11? but it works in windows 10???)
     #
 
     def dialog(char="", str="", dur=60, newline=0, bkspc=0, richmd="", voice=''):
