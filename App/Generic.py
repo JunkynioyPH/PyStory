@@ -126,7 +126,7 @@ class popup:
                 AudSys.soundfx.play(Sfx)
                 popup.message('System','Message',f"{Message}")
 
-    def image():
+    def image(): ############################################ WIP
         print('work in progress')
 
 # perform loading save data (which chapter, perhaps where in the chapter(might add a counter for that), reputation for each character)
