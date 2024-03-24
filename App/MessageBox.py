@@ -1,11 +1,18 @@
 from tkinter import *
 from tkinter import ttk
 
+
+# find a way to open up an image without stalling the main CMD, perhaps threading.
+# so that stuff can happen simultaneously while still being associated witht he main CMD
+# but for this one, i have the option to have it stall the main CMD or not. perhaps a threaded/non-threaded popup.
 def MsgBox(wTitle, Subtitle, Message, Button="OK", Duration=120):
     
     root = Tk()
 
-    root.resizable(False,False)
+    # root.resizable(False,False)
+    root.overrideredirect(True)
+    root.wm_attributes("-topmost", True)
+    
 
     mframe = ttk.Frame(root, relief=SUNKEN, borderwidth=10)
     mframe.grid(column=1, row=1, sticky=(N, S, E, W))
@@ -24,11 +31,8 @@ def MsgBox(wTitle, Subtitle, Message, Button="OK", Duration=120):
         root.destroy()
 
     def CloseTimer():
-        try:
-            Length = int(Duration) * 1000
-            root.after(Length, Close)
-        except:
-            print("fucked")
+        Length = int(Duration) * 1000
+        root.after(Length, Close)
 
     lb(Title, text=f"{Subtitle:<55}", wraplength=300).grid(column=2, row=1,sticky=(N,E,W,S))
     lb(SubTitle, text=Message, wraplength=300).grid(column=1, row=1,sticky=(N,E,W,S))

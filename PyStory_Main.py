@@ -17,7 +17,7 @@ pretty.install()
 Generic.cmdline.clearscreen()
 if os.name=='nt':
     os.system('title PyStory - Junkynioy#2408')
-    os.system('mode con cols=210 lines=45')
+    os.system('mode con cols=210 lines=45') # does not work with w11 terminal
 else:
     Generic.printmd("\n[green]PyStory - Junkynioy#2408[/green]\n")
 
@@ -43,7 +43,7 @@ def gameinit():
     global menuloop
     # load volume from settings
     # Generic.LoadSave() somewhere in the main menu
-    Generic.AudSys.audiosysteminit(25) # 25%
+    Generic.AudSys.audiosysteminit(25*0.50) # 25% == 100%
     menuloop = True
 
     # use [['text1'],[text2]] .py list for Dialogues
@@ -71,7 +71,7 @@ def selection(Option):
         case _:
             Generic.cmdline.clearscreen()
             splash()
-            Generic.cmdline.rendertxt(char='SYSTEM CALL', str='[red]Invalid Selection![/red]', dur=30)
+            console.log("Invalid Selection!", highlight=True)
 
 def gameloop():
     global menuloop
@@ -87,19 +87,20 @@ def gameloop():
                     [bold red][4] Exit[/bold red]
                     \n"""
         # printmd(f"[italic red]{MainMenu}[/italic red] Poggers")
+
+        # Print()
+        console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy())) ####
+        Generic.cmdline.rendertxt(title="[bright_cyan]Select[/bright_cyan] an [bright_blue]option[/bright_Blue]",str=MainMenu, dur=0.5)
+        ans = Generic.ask('                    >>  ')
+        # Extra.Fun(selection) is for funny
+        Extra.Fun(ans)
         try:
-            print()
-            console.log("Generic.AudSys.audio.music.get_busy() is " + str(Generic.AudSys.audio.music.get_busy())) ####
-            Generic.cmdline.rendertxt(char="[bright_cyan]Select[/bright_cyan] an [bright_blue]option[/bright_Blue]",str=MainMenu, dur=2.5)
-            ans = Generic.ask('                    >>   ')
-            # Extra.Fun(selection) is for funny
-            Extra.Fun(ans)
             selection(int(ans))
         except Exception as ERR:
             Generic.cmdline.clearscreen()
-            # Generic.cmdline.rendertxt(char='SYSTEM CALL', str=f'[red]{ERR}[/red]', dur=15)
-            console.log(ERR)
+            console.log(f'{ERR}')
             splash()
+
     # then the game stuff initialises here
 
 
