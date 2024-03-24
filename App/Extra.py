@@ -2,6 +2,8 @@ import App.Generic as Generic
 
 def Fun(Case):
     match Case:
+        case "test":
+            Generic.popup.image('Background','.\\Assets\\test\\Char_Full_BG.png')
         case "Lmfao":
             print('ayo wtf')
             Generic.wait(2)
@@ -26,13 +28,17 @@ def Fun(Case):
             Integer feugiat scelerisque varius morbi enim nunc faucibus.
             Rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat.
             Fermentum odio eu feugiat pretium nibh ipsum consequat.
-            Adipiscing elit pellentesque habitant morbi tristique senectus et.
+            Adipiscing elit pellentesque [/red] habitant morbi tristique senectus et.
             Vel pharetra vel turpis nunc eget lorem.
             Purus faucibus ornare suspendisse sed nisi lacus. Donec massa sapien faucibus et molestie.
             """
             Long = """            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"""
-            Generic.cmdline.dialog(char='[green]Lorem Ipsum[/green]', str=f'{long_text}', dur=3.125) # richmd="" causes newlines to not be placed!
+            
+            # While it is possible to render these block of text with dialog(), it does not support colors and breaks formatting.
+            # instead, use rendertext() which supports formatting directly in the string.
+            Generic.cmdline.rendertxt(title='[green]Lorem Ipsum[/green]', str=f'{long_text}', dur=3.125)
             Generic.cmdline.dialog(char='[green]Lorem Ipsum[/green]', str=f'{Long}', dur=3.125)
+            
             Generic.wait(4)
             Generic.cmdline.dialog(char='TEST CHARACTER', str='this is a testing poggers poggers')
             Generic.cmdline.dialog(bkspc=19, dur=80)

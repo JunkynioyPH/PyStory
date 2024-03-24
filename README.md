@@ -1,6 +1,6 @@
 # PyStory
 
-**A Base-Game Template that allows for creation of Text-based/Visual-Novel/Date-sim type game, with ease (for me at least))**
+**A Base-Game Template that allows for creation of Text-based/Visual-Novel/Date-sim type game, with ease (for me at least)**
 
 # Gist of its functionality
 
@@ -11,9 +11,10 @@
 - `load/save` progress whether inventory or chapter progress `(N/A)`
 - settings for volume and other things you might add. `(N/A) [I plan to make it somewhat modular]`
 - Trigger a `funny haha` of your choice when a `key-word` is inserted. `(just look at the code for what i mean)`
-- Display `Images/Videos`, idk. `(N/A)`
+- Display `Images` using `tkinter, canvas.create_image()`
+- Display `Videos`, idk `(N\A)`
 - Ability to manipulate `Mouse/Keyboard Inputs` using `PyAutoGui`, Mainly because I cannot be bothered to use other means.
-- Find `WindowNameTitles` using `PyAutoGui` "Automatically" moving them using PyAutoGui. `(see `[PyStory/DevTools/](https://github.com/JunkynioyPH/PyStory/tree/master/devTools)`)`
+- Find `WindowNameTitles` using `PyGetWindow` "Automatically" moving them using PyAutoGui. `(see `[PyStory/DevTools/](https://github.com/JunkynioyPH/PyStory/tree/master/devTools)`)`
 - All of this will be consolidated into different easy-to-understand function/class names in an `importable 'essential.py' (with descriptions)` in every chapterX.py  for ease of creating a ChapterX.py `(see `[PyStory/Chapters/](https://github.com/JunkynioyPH/PyStory/tree/master/Chapters)`)`
 - Much more `(Either it is not implemented yet or I have forgotten.)`
 

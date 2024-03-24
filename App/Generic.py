@@ -2,6 +2,7 @@ import os, time, rich, sys, json
 import App.AudSys as AudSys
 from rich.console import Console
 from App.MessageBox import MsgBox
+from App.ImageBox import ImgBox
 
 console = Console()
 
@@ -26,8 +27,6 @@ class cmdline:
         def delete():
             for _ in range(bkspc+1):
                 print('\b \b', end="", flush=True)
-                # sys.stdout.write("\010")
-                # cmdline.printmd('\010')
                 time.sleep(float(dur)/1000)
         def write():
             def printf(str):
@@ -48,19 +47,7 @@ class cmdline:
                     _ = word[letter-1:letter]
                     cmdline.printmd(_)
                     letter += 1
-                    # Full stop detector, hardcoding \n formatting. when " . " is found as well as trailing "..." detectiona nd properly detecting the actual End of string.
-                    try:
-                        if word[letter-1] == "." and word[letter-2] != ".":
-                            printf('\b') if debug == 1 else ''
-                            cmdline.printmd("[green].[/green]") if debug == 1 else '' # debug info
-                    except:
-                        if _ == "." and richmd == "":
-                            print()
-                            printf('\b'*2) if debug == 1 else ''
-                            cmdline.printmd(f"[yellow]{_}[/yellow][blue]{word[letter-2]}[/blue]") if debug == 1 else '' # debug info
-                        else:
-                            printf('\b') if debug == 1 else ''
-                            cmdline.printmd(f"[red]{_}[/red]") if debug == 1 else '' # debug info
+                    #voice here, maybe soon ill add that, kinda like undertale's thingy when they talk
                     time.sleep(float(dur)/1000)
                 print('\b \b'*len(word), end="", flush=True) if richmd != "" else "" ## figure how to get rid of this line
                 cmdline.printmd(f"[{richmd}]{word}[/{richmd}]") if richmd != "" else ""
@@ -82,7 +69,6 @@ class cmdline:
                 time.sleep(float(dur)/1000)
             print(f"\n" + "\x1b[1A\x1b[2K" * line_count, end='', flush=True)
             cmdline.printmd(f"{full_str}")
-            # time.sleep(5)
         else:
             cmdline.printmd('\n'*newline)
 
@@ -103,10 +89,12 @@ def ask(string):
 
 
 class popup:
+    # function to make "" works, if i remember correctly
     def message(Title, Subtitle, Message, Button="OK", Duration=120):
         TITLE, SUBTITLE, MESSAGE, BUTTON = Title.replace('"','\\"'), Subtitle.replace('"','\\"'), Message.replace('"','\\"'), Button.replace('"','\\"')
         MsgBox(TITLE, SUBTITLE, MESSAGE, BUTTON, Duration)
 
+    # the windows-like popups
     def system(Type, Message, Sfx=''):
         Type = Type.lower()
         match Type:
@@ -126,8 +114,10 @@ class popup:
                 AudSys.soundfx.play(Sfx)
                 popup.message('System','Message',f"{Message}")
 
-    def image(): ############################################ WIP
-        print('work in progress')
+    # Basically message box, but like hella tweaked for rendering images
+    # PNG only, no "glowing effects" at the edge of images as those wont count as color #f0f0f0 which is keyed-out
+    def image(ID, Image):
+        ImgBox(f'{ID}',f'{Image}')
 
 # perform loading save data (which chapter, perhaps where in the chapter(might add a counter for that), reputation for each character)
 # show loading screen showing a list of save-SaveName.json files in SAVES folder
