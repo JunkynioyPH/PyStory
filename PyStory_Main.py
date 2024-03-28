@@ -43,6 +43,8 @@ def gameinit():
     global menuloop
     # load volume from settings
     # Generic.LoadSave() somewhere in the main menu
+
+    # AudSys: change samplerate to 48000 or whatever, cuz it defaults to like 41000 and i can hear sus crackle noises
     Generic.AudSys.audiosysteminit(25*0.50) # 25% == 100%
     menuloop = True
 

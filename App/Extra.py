@@ -36,7 +36,7 @@ def Fun(Case):
             
             # While it is possible to render these block of text with dialog(), it does not support colors and breaks formatting.
             # instead, use rendertext() which supports formatting directly in the string.
-            Generic.cmdline.rendertxt(title='[green]Lorem Ipsum[/green]', str=f'{long_text}', dur=3.125)
+            Generic.cmdline.rendertxt(title='[green]Lorem Ipsum[/green]', str=f'{long_text}', dur=10)
             Generic.cmdline.dialog(char='[green]Lorem Ipsum[/green]', str=f'{Long}', dur=3.125)
             
             Generic.wait(4)
