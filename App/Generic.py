@@ -1,44 +1,77 @@
 import os, time, rich, sys, json
 import App.AudSys as AudSys
 from rich.console import Console
+from App.MessageBox import MsgBox
+from App.ImageBox import ImgBox
+
 console = Console()
 
 class cmdline:
     def clearscreen():
         os.system('cls' if os.name=='nt' else 'clear')
 
-    def printmd(String, end=''):
-        rich.print(String, end=f"{end}")
+    def printmd(String, end='', multiLine=True):
+        print(f"\b \b"*len(String), end='', flush=True) if multiLine == False else ''
+        rich.print(String, end=f"{end}", flush=True)
     
     # this is so scuffeds
     # https://stackoverflow.com/questions/28802417/how-to-count-lines-in-multi-lined-strings
     #
+    # dialog(char="test", str="poggers") \n dialog(str="poggers" richmd="")
     #
-    # ReWrite this to have a buffer for text + formatting, then .split() the buffer into a list;
-    # then print out each item in list then remove unformatted then print out formatted item
-    # implement deleting 1 character at a time instead of a full line [apr 7 2023]
+    # rich library ( cmdline.printmd() ) ABSOLUTELY HATES " \b " or similar ESCAPE CODES.  (doesnt on windows 11? but it works in windows 10???)
     #
-    def dialog(char='', str='', dur=60, spc=0):
-        if spc < 1:
-            line_count = len(list(str.split('\n'))) - 2
-            full_str = f"<{char}>  {str}"
-            letter = 1
-            while letter <= len(str):
-                new_str = full_str[letter-1:letter]
-                cmdline.printmd(new_str)
-                sys.stdout.flush()
-                letter += 1 
+
+    def dialog(char="", str="", dur=60, newline=0, bkspc=0, richmd="", voice=''):
+        debug = 0
+        def delete():
+            for _ in range(bkspc+1):
+                print('\b \b', end="", flush=True)
                 time.sleep(float(dur)/1000)
-            cmdline.printmd(line_count)
-
-            # might be able to be written better with code below:
-            # print('\b' * len(positionStr), end='', flush=True)
-            sys.stdout.write('\r\x1b[1A\x1b[2K' * line_count) if line_count != -1 else sys.stdout.write('\r\x1b[2K') # \x1b[2K == delete \x1b[1A == UP ARROW ---- \r\x1b[2K
-            ##
-
-            cmdline.printmd(f"\r{full_str}") if line_count != -1 else cmdline.printmd(f"\r{full_str}\n")
+        def write():
+            def printf(str):
+                print(str, end='', flush=True)
+            print() if char != "" == richmd else ""
+            strbuffer = str.split()
+            charbuffer = f"<{char}>"
+            if char != "":
+                for letter in charbuffer:
+                    cmdline.printmd(letter)
+                    time.sleep(float(dur)/1000)
+                cmdline.printmd(f"<{char}>  ", multiLine=False)
+            # for each word in buffer
+            for word in strbuffer:
+                letter = 1
+                ## for each letter in word
+                while letter <= len(word):
+                    _ = word[letter-1:letter]
+                    cmdline.printmd(_)
+                    letter += 1
+                    #voice here, maybe soon ill add that, kinda like undertale's thingy when they talk
+                    time.sleep(float(dur)/1000)
+                print('\b \b'*len(word), end="", flush=True) if richmd != "" else "" ## figure how to get rid of this line
+                cmdline.printmd(f"[{richmd}]{word}[/{richmd}]") if richmd != "" else ""
+                cmdline.printmd(" ")
+        # yeah it looks nicer but it's kinda no different to the regular if-elif-else statements
+        write() if newline < 1 and bkspc < 1 else ''
+        delete() if bkspc >= 1 and newline < 1 else ''
+        cmdline.printmd('\n'*newline) if newline >= 1 and bkspc < 1 else ''
+        cmdline.printmd("\n[red]You cannot use both \[newline] and \[bkspc] in dialog...[/red] [yellow]u dum? :clown:[/yellow]") if newline > 1 and bkspc > 1 else ''
+    
+    # repurposed for JUST rendering on screen graphics art/menus unless until further notice
+    def rendertxt(title='', str='', dur=0.5, newline=0):
+        if newline < 1:
+            print()
+            line_count = len(list(str.split('\n')))
+            full_str = f"[{title}]  {str}" if title != "" else ""
+            letter = 1
+            for letter in full_str:
+                cmdline.printmd(letter)
+                time.sleep(float(dur)/1000)
+            print(f"\n" + "\x1b[1A\x1b[2K" * line_count, end='', flush=True)
+            cmdline.printmd(f"{full_str}")
         else:
-            cmdline.printmd('\n'*spc)
+            cmdline.printmd('\n'*newline)
 
 
 def wait(Duration, msg=False,):
@@ -46,8 +79,9 @@ def wait(Duration, msg=False,):
     if msg == False:
         time.sleep(Duration)
     else:
-        cmdline.dialog(char='SYSTEM CALL', str=f'Waiting... [{Duration}s]')
-        cmdline.dialog(spc=1)
+        cmdline.dialog(newline=1)
+        cmdline.dialog(char='SYSTEM', str=f'Waiting... [{Duration}s]', richmd="yellow")
+        cmdline.dialog(newline=1)
         time.sleep(Duration)
 
 def ask(string):
@@ -56,10 +90,12 @@ def ask(string):
 
 
 class popup:
+    # function to make "" works, if i remember correctly
     def message(Title, Subtitle, Message, Button="OK", Duration=120):
         TITLE, SUBTITLE, MESSAGE, BUTTON = Title.replace('"','\\"'), Subtitle.replace('"','\\"'), Message.replace('"','\\"'), Button.replace('"','\\"')
-        os.system(f'.\App\MessageBox.pyw "{TITLE}" "{SUBTITLE}" "{MESSAGE}" {Duration} "{BUTTON}"')
+        MsgBox(TITLE, SUBTITLE, MESSAGE, BUTTON, Duration)
 
+    # the windows-like popups
     def system(Type, Message, Sfx=''):
         Type = Type.lower()
         match Type:
@@ -79,8 +115,10 @@ class popup:
                 AudSys.soundfx.play(Sfx)
                 popup.message('System','Message',f"{Message}")
 
-    def image():
-        print('work in progress')
+    # Basically message box, but like hella tweaked for rendering images
+    # PNG only, no "glowing effects" at the edge of images as those wont count as color #f0f0f0 which is keyed-out
+    def image(ID, Image):
+        ImgBox(f'{ID}',f'{Image}')
 
 # perform loading save data (which chapter, perhaps where in the chapter(might add a counter for that), reputation for each character)
 # show loading screen showing a list of save-SaveName.json files in SAVES folder
