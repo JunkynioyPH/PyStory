@@ -56,11 +56,12 @@ class cmdline:
         write() if newline < 1 and bkspc < 1 else ''
         delete() if bkspc >= 1 and newline < 1 else ''
         cmdline.printmd('\n'*newline) if newline >= 1 and bkspc < 1 else ''
-        cmdline.printmd("[red]You cannot use both \[newline] and \[bkspc] in dialog...[/red] [yellow]u dum? :clown:[/yellow]") if newline > 1 and bkspc > 1 else ''
+        cmdline.printmd("\n[red]You cannot use both \[newline] and \[bkspc] in dialog...[/red] [yellow]u dum? :clown:[/yellow]") if newline > 1 and bkspc > 1 else ''
     
     # repurposed for JUST rendering on screen graphics art/menus unless until further notice
     def rendertxt(title='', str='', dur=0.5, newline=0):
         if newline < 1:
+            print()
             line_count = len(list(str.split('\n')))
             full_str = f"[{title}]  {str}" if title != "" else ""
             letter = 1
