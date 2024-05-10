@@ -23,21 +23,18 @@ class cmdline:
     #
 
     def dialog(char="", str="", dur=60, newline=0, bkspc=0, richmd="", voice=''):
-        debug = 0
         def delete():
             for _ in range(bkspc+1):
                 print('\b \b', end="", flush=True)
-                time.sleep(float(dur)/1000)
+                time.sleep(float(dur)/1000) # milliseconds
         def write():
-            def printf(str):
-                print(str, end='', flush=True)
             print() if char != "" == richmd else ""
             strbuffer = str.split()
             charbuffer = f"<{char}>"
             if char != "":
                 for letter in charbuffer:
                     cmdline.printmd(letter)
-                    time.sleep(float(dur)/1000)
+                    time.sleep(float(dur)/1000) # milliseconds
                 cmdline.printmd(f"<{char}>  ", multiLine=False)
             # for each word in buffer
             for word in strbuffer:
@@ -48,17 +45,17 @@ class cmdline:
                     cmdline.printmd(_)
                     letter += 1
                     #voice here, maybe soon ill add that, kinda like undertale's thingy when they talk
-                    time.sleep(float(dur)/1000)
+                    time.sleep(float(dur)/1000) # milliseconds
                 print('\b \b'*len(word), end="", flush=True) if richmd != "" else "" ## figure how to get rid of this line
                 cmdline.printmd(f"[{richmd}]{word}[/{richmd}]") if richmd != "" else ""
                 cmdline.printmd(" ")
         # yeah it looks nicer but it's kinda no different to the regular if-elif-else statements
-        write() if newline < 1 and bkspc < 1 else ''
-        delete() if bkspc >= 1 and newline < 1 else ''
         cmdline.printmd('\n'*newline) if newline >= 1 and bkspc < 1 else ''
         cmdline.printmd("\n[red]You cannot use both \[newline] and \[bkspc] in dialog...[/red] [yellow]u dum? :clown:[/yellow]") if newline > 1 and bkspc > 1 else ''
-    
-    # repurposed for JUST rendering on screen graphics art/menus unless until further notice
+        write() if bkspc < 1 else ''
+        delete() if bkspc >= 1 and newline < 1 else ''
+
+    # Render Blocks of Graphics, and Paragraph wall of text with styling, all in one go unlike dialog(), which you have to define styling in Function, not style in string block.
     def rendertxt(title='', str='', dur=0.5, newline=0):
         if newline < 1:
             print()
@@ -67,7 +64,7 @@ class cmdline:
             letter = 1
             for letter in full_str:
                 cmdline.printmd(letter)
-                time.sleep(float(dur)/1000)
+                time.sleep(float(dur)/1000) # milliseconds
             print(f"\n" + "\x1b[1A\x1b[2K" * line_count, end='', flush=True)
             cmdline.printmd(f"{full_str}")
         else:
@@ -80,7 +77,7 @@ def wait(Duration, msg=False,):
         time.sleep(Duration)
     else:
         cmdline.dialog(newline=1)
-        cmdline.dialog(char='SYSTEM', str=f'Waiting... [{Duration}s]', richmd="yellow")
+        cmdline.dialog(char='HALT', str=f'Waiting... [{Duration}s]', richmd="yellow") # perhaps animate this somehow
         cmdline.dialog(newline=1)
         time.sleep(Duration)
 

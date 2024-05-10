@@ -32,12 +32,15 @@ def Fun(Case):
             Vel pharetra vel turpis nunc eget lorem.
             Purus faucibus ornare suspendisse sed nisi lacus. Donec massa sapien faucibus et molestie.
             """
-            Long = """            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"""
+            long = """            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"""
             
             # While it is possible to render these block of text with dialog(), it does not support colors and breaks formatting.
             # instead, use rendertext() which supports formatting directly in the string.
-            Generic.cmdline.rendertxt(title='[green]Lorem Ipsum[/green]', str=f'{long_text}', dur=10)
-            Generic.cmdline.dialog(char='[green]Lorem Ipsum[/green]', str=f'{Long}', dur=3.125)
+            Generic.cmdline.rendertxt(title='[green]Lorem Ipsum[/green]', str=f'{long_text}', dur=10) # dur == milliseconds
+            # Example of in-text Formatting breaking.
+            Generic.cmdline.dialog(char='[green]EXAMPLE[/green]', str=f'{long_text}', dur=1) # dur == milliseconds
+            # 
+            Generic.cmdline.dialog(char='[green]Lorem Ipsum[/green]', str=f'{long}', dur=3.125, newline=1) # dur == milliseconds
             
             Generic.wait(4)
             Generic.cmdline.dialog(char='TEST CHARACTER', str='this is a testing poggers poggers')
