@@ -1,8 +1,8 @@
 import os, time, rich, sys, json
 import App.AudSys as AudSys
 from rich.console import Console
-from App.MessageBox_old import MsgBox
-from App.ImageBox_old import ImgBox
+from App.MessageBox import MsgBox
+from App.ImageBox import ImgBox
 
 console = Console()
 
