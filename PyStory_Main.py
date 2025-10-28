@@ -82,7 +82,6 @@ def selection(Option):
 def gameloop():
     # Main Loop
     while mainMenuLoop:
-        splash()
         MainMenu =  """
                     [bold green][1] New Game[/bold green]
                     [bold yellow][2] Load Game[/bold yellow]
@@ -113,6 +112,7 @@ def gameloop():
 # create a separate .py file to display images perhaps using tkinter's GUI !
 
 gameinit()
+splash()
 gameloop()
 
 Core.Cli("[red]Game Closed[/red]").print()
