@@ -26,9 +26,17 @@ class Cli():
         """Clears text in CLI window."""
         os.system('cls' if os.name=='nt' else 'clear')
     
-    def backspace(self, backspace:int, delay:int):
+    def backspace(self, backspace:int, lines:int=0, delay:int=60, replacementChar:str=''):
+        # This will have alignment issues if the
+        # window is too small for text that is too lengthy
+        #
+        # Idk how to get around that
+        # For now it shall assume that the window is large enough
+            if lines > 0:
+                for _ in range(lines):
+                    print('\x1b[1A', end='', flush=True)
             for _ in range(backspace+1):
-                self.print('\b \b', end="", flush=True)
+                print(f'{'\x1b[1D' if replacementChar == '' else f'{"\x1b[1D"*len(replacementChar)}{replacementChar}{"\x1b[1D"*len(replacementChar)}'}', end='', flush=True)
                 time.sleep(float(delay)/1000)
         
     def print(self, newline=False):
@@ -39,9 +47,20 @@ class Cli():
         """Printing text with style.
         - Simulating typing, backspace keystrokes.
         - Print text whilst supporting Rich's [ ] tags.
-        - ' .[ ' marks TAG_START and ' .\\ ' marks TAG_END
-        - there must be a space before AND after .[] & .\\
-        > "this is sampletext. .[red b i] This is RED, BOLD, ITALICS .\ """
+        - Custom formatting tags, "Call-ins"
+        
+        ### There must be a space before AND after ' .[] ' & ' ./ '
+        - ' .[ ' marks RICH_TAG_START and ' ./ ' marks RICH_TAG_END
+        > "This is sampletext. .[red b i] This is RED, BOLD, ITALICS ./ 
+        - Call-in functions in-string with ' ./_ ', syntax is split with ' _ '
+        > "This is sampletext. ./_b_10 backspace 10 characters"
+        
+        - List of Call-ins:
+        >- ./_p_x = pause for x seconds, can use Float. (x = 0.5)
+        >- ./_b_x_y = backspace x times, (opt) delayed for y ms (1000ms = 1s)
+        >- ./_bd_x_y = backspace delete
+        
+        """
         colorBuffer = []
         colorConstructMode = False
         wordsBuffer = self.text.split()
@@ -65,8 +84,17 @@ class Cli():
                 colorBuffer.append(f"{word} ")
                 continue
             # Reset formatting
-            if '.\\' in word:
+            if './' in word and len(word) < 3:
                 colorBuffer = []
+                continue
+            # Perform known Call-in Tags
+            elif './' in word and len(word) >= 3:
+                # perfect place to parse custom tags and directly call functions
+                # in-string without calling functions separately after printing
+                parameters = word.split('_')[1:len(word.split('_'))] # omit ./
+                match parameters:
+                    case _:
+                        Cli('???').print()
                 continue
             
             for letter in word:
@@ -81,10 +109,16 @@ class Cli():
             print() if newLineEnd else ''
     
 class Common():
-    def wait(Duration, verbose=False):
+    def wait(Duration:int, verbose=False):
         if verbose:
-            Cli(f'.[yellow] Waiting <{Duration if Duration < 60 else Duration/60}{'s' if Duration < 60 else 'min/s'}> ... .\\').fancyPrint()
-            time.sleep(Duration)
+            durationTick = Duration
+            for _ in range(Duration):
+                durationFormat = f"{durationTick if durationTick < 60 else durationTick/60}{'s' if durationTick < 60 else 'min/s'}"
+                text = f'.[yellow] Waiting {durationFormat} ./'
+                Cli(text).fancyPrint(25)
+                time.sleep(1)
+                durationTick -= 1
+                Cli().backspace(len(text),0,10,' ')
             print()
             return
         
