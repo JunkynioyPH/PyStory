@@ -26,19 +26,20 @@ class Cli():
         """Clears text in CLI window."""
         os.system('cls' if os.name=='nt' else 'clear')
     
-    def backspace(self, backspace:int, lines:int=0, delay:int=60, replacementChar:str=''):
+    def backspace(self, backspace:int, delay:int=60, replacementChar:str=''):
         # This will have alignment issues if the
         # window is too small for text that is too lengthy
         #
         # Idk how to get around that
         # For now it shall assume that the window is large enough
-            if lines > 0:
-                for _ in range(lines):
-                    print('\x1b[1A', end='', flush=True)
-            for _ in range(backspace+1):
-                print(f'{'\x1b[1D' if replacementChar == '' else f'{"\x1b[1D"*len(replacementChar)}{replacementChar}{"\x1b[1D"*len(replacementChar)}'}', end='', flush=True)
-                time.sleep(float(delay)/1000)
-        
+        for _ in range(backspace+1):
+            print(f'{'\x1b[1D' if replacementChar == '' else f'{"\x1b[1D"*len(replacementChar)}{replacementChar}{"\x1b[1D"*len(replacementChar)}'}', end='', flush=True)
+            time.sleep(float(delay)/1000)
+    
+    def backUpLine(self, lines:int):
+        for _ in range(lines):
+            print('\x1b[1A', end='', flush=True)
+    
     def print(self, newline=False):
         """Simply print."""
         rich.print(f'{self.text}', end=f'{'\n' if newline else ''}')
@@ -90,11 +91,18 @@ class Cli():
             # Perform known Call-in Tags
             elif './' in word and len(word) >= 3:
                 # perfect place to parse custom tags and directly call functions
-                # in-string without calling functions separately after printing
+                # in-string without calling functions separately after/before printing
+                # it's called-in mid-print
                 parameters = word.split('_')[1:len(word.split('_'))] # omit ./
-                match parameters:
+                match parameters[0].lower():
+                    case 'b':
+                        pass
+                    case 'bd':
+                        pass
+                    case 'p':
+                        Common.wait(float(parameters[1]))
                     case _:
-                        Cli('???').print()
+                        Cli('.[red b] ???').fancyPrint()
                 continue
             
             for letter in word:
@@ -118,12 +126,10 @@ class Common():
                 Cli(text).fancyPrint(25)
                 time.sleep(1)
                 durationTick -= 1
-                Cli().backspace(len(text),0,10,' ')
+                Cli().backspace(len(text),10,' ')
             print()
             return
-        
         time.sleep(Duration)
-        print()
         
     def ask(text:str) -> str:
         Cli(text).print()

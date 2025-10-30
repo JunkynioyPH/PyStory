@@ -20,7 +20,7 @@ def Fun(Case):
             Core.Cli('This is a test').print(True)
             # Core.Cli('.').print(True)
             Core.Common.wait(5, verbose=True)
-            Core.Cli('Lorem ipsum dolor sit amet, .[red b i] consectetur adipiscing elit, sed do ]]eiusmod tempor incididunt ./ ut labore et dolore magna aliqua. Sed adipiscing diam donec... adipiscing tristique risus.').fancyPrint(10, True)
+            Core.Cli('Lorem ipsum dolor sit amet, .[red b i] consectetur adipiscing ./_p_2 elit, sed do ]]eiusmod tempor incididunt ./ ut labore et ./_a_x dolore magna aliqua. Sed adipiscing diam donec... adipiscing tristique risus.').fancyPrint(10, True)
             Core.Cli(long_text).fancyPrint(20, True)
             Core.Common.wait(5, verbose=True)
             # Core.popup.image('Background','./Assets\\test\\Char_Full_BG.png')
