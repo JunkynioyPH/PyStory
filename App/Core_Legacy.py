@@ -1,8 +1,5 @@
-import os, time, rich, sys, json
-import App.AudSys as AudSys
+import os, time, rich
 from rich.console import Console
-from App.MessageBox import MsgBox
-from App.GuiBox import ImgBox
 
 console = Console()
 
@@ -70,66 +67,3 @@ class cli:
             cli.printmd(f"{full_str}")
         else:
             cli.printmd('\n'*newline)
-
-
-def wait(Duration, msg=False,):
-    # Integer or Float.
-    if msg == False:
-        time.sleep(Duration)
-    else:
-        cli.dialog(newline=1)
-        cli.dialog(char='Pause', str=f'Waiting... [{Duration}s]', richmd="yellow") # perhaps animate this somehow
-        cli.dialog(newline=1)
-        time.sleep(Duration)
-
-def ask(string):
-    cli.printmd(string)
-    return input()
-
-
-class popup:
-    # function to make "" works, if i remember correctly
-    def message(Title, Subtitle, Message, Button="OK", Duration=120):
-        TITLE, SUBTITLE, MESSAGE, BUTTON = Title.replace('"','\\"'), Subtitle.replace('"','\\"'), Message.replace('"','\\"'), Button.replace('"','\\"')
-        MsgBox(TITLE, SUBTITLE, MESSAGE, BUTTON, Duration)
-
-    # the windows-like popups
-    def system(Type, Message, Sfx=''):
-        Type = Type.lower()
-        match Type:
-            case "warning": 
-                AudSys.soundfx.play('ErrExclamation.wav')
-                popup.message('System','Warning',f"{Message}")
-            case "critical":
-                AudSys.soundfx.play('ErrCritStop.wav')
-                popup.message('System','Critical',f"{Message}")
-            case "question":
-                AudSys.soundfx.play('ErrQuestion.wav')
-                popup.message('System','Question',f"{Message}")
-            case "neutral":
-                AudSys.soundfx.play('ErrAsterisk.wav')
-                popup.message('System','Information',f"{Message}")
-            case _:
-                AudSys.soundfx.play(Sfx)
-                popup.message('System','Message',f"{Message}")
-
-    # Basically message box, but like hella tweaked for rendering images
-    # PNG only, no "glowing effects" at the edge of images as those wont count as color #f0f0f0 which is keyed-out
-    def image(ID, Image):
-        ImgBox(f'{ID}',f'{Image}')
-
-# perform loading save data (which chapter, perhaps where in the chapter(might add a counter for that), reputation for each character)
-# show loading screen showing a list of save-SaveName.json files in SAVES folder
-
-## MENUSCREENS.PY MIGHT RENDER THIS NOT REQUIRED.
-def Settings():
-    print('Settings Shown')
-
-def LoadFile():
-    print('File loaded')
-
-def SaveFile():
-    print('File Saved')
-
-def NewGame():
-    print('New game, new name')

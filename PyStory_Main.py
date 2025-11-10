@@ -1,7 +1,7 @@
 import os
-# FOOK OFF!!, STFU!!!
-os.environ["QT_FFMPEG_LOG_LEVEL"] = "fatal"
-os.environ["QT_LOGGING_RULES"] = "*.debug=false;qt.multimedia.*=false"
+# Attempts to silence.
+# os.environ["QT_FFMPEG_LOG_LEVEL"] = "fatal"
+# os.environ["QT_LOGGING_RULES"] = "*.debug=false;qt.multimedia.*=false"
 from rich import pretty
 from App import Core, Extra
 pretty.install()
@@ -40,6 +40,7 @@ def splash():
 http://www.patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=Game%20Title\n"""
     Core.Cli(splashText).print()
 
+# Pre-Start
 def gameinit():
     global mainMenuLoop
     mainMenuLoop = True
@@ -57,6 +58,7 @@ def gameinit():
     # use [['text1'],[text2]] .py list for Dialogues
     # ChapterX.py which contains a list of dialogue for that chapter
 
+# Selections
 def selection(Option):
     global mainMenuLoop
     match Option:
@@ -71,17 +73,18 @@ def selection(Option):
             # Core.Settings()
         case 4:
             if Core.Common.ask('[yellow]Are you[/yellow] [green]Sure?[/green] [[green]y[/green]/[red]n[/red]] [pink]>>[/pink] ').lower() == 'y':
-                mainMenuLoop = False
-            else:
-                splash()
+                Core.Cli("[red]Game Closed[/red]").print()
+                Core.Common.wait(2)
+                exit()
         case _:
             Core.Cli.clear()
-            splash()
-            Core.Cli("[red]Invalid Selection![/red]").print()
+            Core.Cli("[red]Invalid Selection![/red]").print(newline=True)
 
-def gameloop():
-    # Main Loop
+# Game Start
+def inGameloop():
+    # MainMenu
     while mainMenuLoop:
+        splash()
         MainMenu =  """
                     [bold green][1] New Game[/bold green]
                     [bold yellow][2] Load Game[/bold yellow]
@@ -97,7 +100,6 @@ def gameloop():
         except ValueError:
             Core.Cli.clear()
             Core.Cli(f'[red]"{answer}" is not an Integer.[/red]').print()
-            splash()
 
     # then the game stuff initialises here
 
@@ -112,8 +114,4 @@ def gameloop():
 # create a separate .py file to display images perhaps using tkinter's GUI !
 
 gameinit()
-splash()
-gameloop()
-
-Core.Cli("[red]Game Closed[/red]").print()
-Core.Common.wait(2)
+inGameloop()
