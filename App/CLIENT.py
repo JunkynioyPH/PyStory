@@ -35,7 +35,7 @@ def Text():
 Connect()
 
 while True:
-    time.sleep(0.25)
+    # time.sleep(0.25)
     Text()
     data = s.recv(1024)
     print(data.decode())

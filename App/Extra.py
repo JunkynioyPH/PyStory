@@ -1,5 +1,6 @@
 import App.Core as Core
 import App.Core_Legacy as CoreL
+import App.CrossAppComms as Comms
 
 custom_tags = """
 .[red b i] These all have optional syntaxes OMITTED! ./ ./_nl ./_nl
@@ -26,26 +27,27 @@ long = """            Lorem ipsum dolor sit amet, consectetur adipiscing elit, s
 
 def Fun(Case):
     match Case:
-        case "test":
-            Core.Cli('This is a test').print(True)
-            # Core.Cli('.').print(True)
-            Core.Common.wait(2, verbose=True)
-            Core.Cli(custom_tags).fancyPrint(10, True)
-            # Core.Cli(long_text).fancyPrint(20, True)
-            Core.Common.wait(10, verbose=True)
-            # Core.popup.image('Background','./Assets\\test\\Char_Full_BG.png')
         case "Lmfao":
             print('ayo wtf')
             Core.Common.wait(2)
-        case "Debug":
+        case "test":
+            Core.Cli('This is a test').print(True)
+            Core.Common.wait(2, verbose=True)
+            # Core.Cli(custom_tags).fancyPrint(10, True)
+            # Core.Cli(long_text).fancyPrint(20, True)
+            # Core.Common.wait(10, verbose=True)
+        
+            # Core.popup.image('Background','./Assets\\test\\Char_Full_BG.png')
+        case "debug":
             #
             SYSTEM = Core.Common.Character('<[yellow]SYSTEM CALL[/yellow]>', 80)
-            TEST_FEATURE = Core.Common.Character("\[[green]Testing Features[/green]]", 75)
-            MINECRAFT = Core.Common.Character('[green]\[Minecraft Mod]', 85)
+            TEST_FEATURE = Core.Common.Character("[[green]Testing Features[/green]]", 75)
+            MINECRAFT = Core.Common.Character('[green][Minecraft Mod]', 85)
             LEGACY = Core.Common.Character('[magenta b]:LEGACY:',40)
             INLINE = Core.Common.Character('',0)
             
             SYSTEM.say('Performing the series of tests!')
+            SYSTEM.say('.[red b] MY HEAD HURTS!!!!!!!!!! ./')
             SYSTEM.say('this is on a new line', newline=False)
             INLINE.say('.[red b i] this is slowed and in the same line ./ Poggers.',150)
             

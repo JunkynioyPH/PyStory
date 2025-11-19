@@ -14,8 +14,8 @@ CONSOLE = Console()
 # [vorbis @ 0x4f7db00] Could not update timestamps for discarded samples. 71-Char line
 #             ^^^^^^ im sure this thing stays at a consistent length
 
-DEVICE = QMediaDevices.defaultAudioOutput()
-audioEngine = AudioEngine.AudioManager(DEVICE)
+# DEVICE = QMediaDevices.defaultAudioOutput()
+# audioEngine = AudioEngine.AudioManager(DEVICE)
 
 class Cli():
     def __init__(self, text:str=''):
@@ -161,10 +161,16 @@ class Common():
         def __init__(self, name:str, delay:int):
             self.name:str = name+f'{' ' if name != '' else ''}'
             self.delay = delay
+            # self.characterPFP = './...'
         def say(self, words:str, delay:int=0, newline:bool=True):
             delayValue:int = self.delay if delay == 0 else delay
             Cli(self.name).print()
             Cli(words).fancyPrint(delayValue, newlines=False, newLineEnd=newline)
+        # def shout(self, words:str, delay:int=0, newline:bool=True):
+        #     words = f".[b] {words} ./"
+        #     self.say(words, delay, newline)
+        # def ponder(self):
+        #     ...
         
         
     

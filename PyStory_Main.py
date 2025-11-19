@@ -50,9 +50,10 @@ def gameinit():
     # find a way to silence the fking thing that pops up
     # when it plays an audio file
     # temp
-    Core.audioEngine.addIndex('audio','./Assets/Audio/Music/mainMenu.ogg')
-    Core.audioEngine.toggleState('audio','loop')
-    Core.audioEngine.play('audio','mainMenu')
+    
+    # Core.audioEngine.addIndex('audio','./Assets/Audio/Music/mainMenu.ogg')
+    # Core.audioEngine.toggleState('audio','loop')
+    # Core.audioEngine.play('audio','mainMenu')
     
 
     # use [['text1'],[text2]] .py list for Dialogues
