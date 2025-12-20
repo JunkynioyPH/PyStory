@@ -46,15 +46,6 @@ def gameinit():
     mainMenuLoop = True
     # load volume from settings
     # Core.LoadSave() somewhere in the main menu
-    
-    # find a way to silence the fking thing that pops up
-    # when it plays an audio file
-    # temp
-    
-    # Core.audioEngine.addIndex('audio','./Assets/Audio/Music/mainMenu.ogg')
-    # Core.audioEngine.toggleState('audio','loop')
-    # Core.audioEngine.play('audio','mainMenu')
-    
 
     # use [['text1'],[text2]] .py list for Dialogues
     # ChapterX.py which contains a list of dialogue for that chapter
@@ -82,6 +73,8 @@ def selection(Option):
             Core.Cli("[red]Invalid Selection![/red]").print(newline=True)
 
 # Game Start
+# might be a good idea to use qt's Timer() instead of just hardcoding a while True
+# This way CTRL + C actually works :skull:
 def inGameloop():
     # MainMenu
     while mainMenuLoop:

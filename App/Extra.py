@@ -24,18 +24,34 @@ Purus faucibus ornare suspendisse sed nisi lacus. Donec massa sapien faucibus et
 """
 long = """            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"""
 
+    # Core.audioEngine.toggleState('audio','loop')
+    # Core.audioEngine.play('audio','mainMenu')
+
+audioEngine = Comms.ClientObj("127.0.2.1",2222,"Game")
 
 def Fun(Case):
+    
+    
     match Case:
         case "Lmfao":
             print('ayo wtf')
             Core.Common.wait(2)
+        case 'music':
+            audioEngine.send('mediaPos:0')
+            audioEngine.send('status')
         case "test":
             Core.Cli('This is a test').print(True)
             Core.Common.wait(2, verbose=True)
+            audioEngine.send("audioIndex:add:audio:./Assets/Audio/Music/mainMenu.ogg")
+            audioEngine.send("listDevices")
+            audioEngine.send("setDevice:3")
+            audioEngine.send("toggle:audioLoop")
+            audioEngine.send("play:audio:mainMenu")
+            audioEngine.send('mediaPos:0')
+            
             # Core.Cli(custom_tags).fancyPrint(10, True)
             # Core.Cli(long_text).fancyPrint(20, True)
-            # Core.Common.wait(10, verbose=True)
+            Core.Common.wait(10, verbose=True)
         
             # Core.popup.image('Background','./Assets\\test\\Char_Full_BG.png')
         case "debug":
@@ -45,7 +61,9 @@ def Fun(Case):
             MINECRAFT = Core.Common.Character('[green][Minecraft Mod]', 85)
             LEGACY = Core.Common.Character('[magenta b]:LEGACY:',40)
             INLINE = Core.Common.Character('',0)
+            TEST = Core.Common.Character("SingleWord",20)
             
+            TEST.say('this is a character with only 1 wordName')
             SYSTEM.say('Performing the series of tests!')
             SYSTEM.say('.[red b] MY HEAD HURTS!!!!!!!!!! ./')
             SYSTEM.say('this is on a new line', newline=False)

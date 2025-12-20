@@ -21,12 +21,14 @@ class Cli():
     def __init__(self, text:str=''):
         """Contains basic CLI text rendering implementations."""
         self.text = text
-    
+        
+    @staticmethod
     def clear():
         """Clears text in CLI window."""
         os.system('cls' if os.name=='nt' else 'clear')
     
-    def backspace(self, backspace:int, delay:int=60, replacementChar:str=''):
+    @staticmethod
+    def backspace(backspace:int, delay:int=60, replacementChar:str=''):
         # This will have alignment issues if the
         # window is too small for text that is too lengthy
         #
@@ -36,7 +38,8 @@ class Cli():
             print(f"\x1b[1D"+replacementChar+f"{'\x1b[1D'*len(replacementChar)}", end='', flush=True)
             time.sleep(float(delay)/1000)
     
-    def backUpLine(self, lines:int):
+    @staticmethod
+    def backUpLine(lines:int):
         for _ in range(lines):
             print('\x1b[1A', end='', flush=True)
     
@@ -44,7 +47,7 @@ class Cli():
         """Simply print."""
         rich.print(f'{self.text}', end=f'{'\n' if newline else ''}')
         
-    def fancyPrint(self, delay:int=60, newlines:bool=True, newLineEnd:bool=False):
+    def fancyPrint(self, delay:int=60, newlines:bool=True, newLineEnd:bool=False, noTag=False):
         """Printing text with style.
         - Simulating typing, backspace keystrokes.
         - Print text whilst supporting Rich's [ ] tags.
@@ -91,7 +94,12 @@ class Cli():
                 colorBuffer = []
                 continue
             # Perform known Call-in Tags
-            elif './' in word and len(word) >= 3:
+            elif './' in word and len(word) >= 3 and not noTag:
+                #
+                # noTag argument is for when you actually want to print raw but keep animations
+                # mainly added because this causes issues with audioEngine.send() inner functions
+                # which sends strings that DOES contain ./ but it's ./filepath/sound.mp3
+                #
                 # perfect place to parse custom tags and directly call functions
                 # in-string without calling functions separately after/before printing
                 # it's called-in mid-print
@@ -100,20 +108,19 @@ class Cli():
                     # offsets by 1 character is applied as in line 130, re-introduces per-word spaces.
                     case 'b':
                         # offset by 1 char
+                        self.backspace(1,0)
                         try: 
-                            self.backspace(1,0)
                             self.backspace(int(parameters[1]), int(parameters[2]))
                         except IndexError:
-                            self.backspace(1,0)
                             self.backspace(int(parameters[1]))
                     case 'bd':
                         # offset by 1 char
+                        self.backspace(1,0)
                         try:
                             self.backspace(int(parameters[1]), int(parameters[2]), ' ')
                             self.backspace(1,0)
                         except IndexError:
                             self.backspace(int(parameters[1]), replacementChar=' ')
-                            self.backspace(1,0)
                     case 'pt':
                         # offset by 1 char
                         self.backspace(1,0)
@@ -127,10 +134,10 @@ class Cli():
                 continue
             
             for letter in word:
-                Cli(f"{''.join(colorBuffer)}{letter}").print()
+                rich.print(f"{''.join(colorBuffer)}{letter}",end='')
                 time.sleep(float(delay)/1000)
             else:
-                Cli(' ').print() # Re-introduce per-word spaces
+                rich.print(f" ",end='') # Re-introduce per-word spaces
                 # Re-implement newlines, when it finds a ' . ' as the last "letter"
                 # Gets disabled when newlines is set to FALSE
                 if word[-1] == '.' and newlines:
@@ -148,7 +155,7 @@ class Common():
                 Cli(text).fancyPrint(25)
                 time.sleep(1)
                 durationTick -= 1
-                Cli().backspace(len(text),10,' ')
+                Cli.backspace(len(text),10,' ')
             # print(flush=True)
             return
         time.sleep(Duration)
@@ -158,14 +165,15 @@ class Common():
         return input()
     
     class Character():
-        def __init__(self, name:str, delay:int):
+        def __init__(self, name:str, delay:int, noTag=False):
             self.name:str = name+f'{' ' if name != '' else ''}'
             self.delay = delay
+            self.noTag = noTag
             # self.characterPFP = './...'
         def say(self, words:str, delay:int=0, newline:bool=True):
             delayValue:int = self.delay if delay == 0 else delay
             Cli(self.name).print()
-            Cli(words).fancyPrint(delayValue, newlines=False, newLineEnd=newline)
+            Cli(words).fancyPrint(delayValue, False, newline, self.noTag)
         # def shout(self, words:str, delay:int=0, newline:bool=True):
         #     words = f".[b] {words} ./"
         #     self.say(words, delay, newline)

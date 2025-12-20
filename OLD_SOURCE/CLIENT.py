@@ -3,8 +3,9 @@
 import socket, os, time
 os.system('title "Junkynioy#2408 CLIENT"')
 
-HOST = input("\nIP > ")  # HOST IP or HOSTNAME (e.g. 127.0.0.1 or host.name.com)
-PORT = int(input("\nPort > "))  # The port used by the server
+# HOST = input("\nIP > ")  # HOST IP or HOSTNAME (e.g. 127.0.0.1 or host.name.com)
+# PORT = int(input("\nPort > "))  # The port used by the server
+HOST, PORT = '127.0.2.1',2222
 
 def Connect():
     try:
