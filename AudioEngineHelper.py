@@ -1,4 +1,4 @@
-import App.CrossAppComms as Comms
+import App.CrossAppHelper as Comms
 from PyQt6.QtCore import QObject, QThread, pyqtSignal
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtMultimedia import QMediaDevices
@@ -90,7 +90,7 @@ def main():
                             audioEngine.toggleState('sound','multi')
                         case toggle:
                             return f'Unknown Toggle {toggle}'
-                    return f'Toggled {data[1]}'
+                    return f'Toggled {data[1]} : {audioEngine.loopMode}'
                 
                 case 'play':
                     audioEngine.play(data[1], data[2])

@@ -1,6 +1,6 @@
 import App.Core as Core
 import App.Core_Legacy as CoreL
-import App.CrossAppComms as Comms
+import App.CrossAppHelper as Comms
 
 custom_tags = """
 .[red b i] These all have optional syntaxes OMITTED! ./ ./_nl ./_nl
@@ -27,7 +27,7 @@ long = """            Lorem ipsum dolor sit amet, consectetur adipiscing elit, s
     # Core.audioEngine.toggleState('audio','loop')
     # Core.audioEngine.play('audio','mainMenu')
 
-audioEngine = Comms.ClientObj("127.0.2.1",2222,"Game")
+# audioEngine = Comms.ClientObj("127.0.2.1",2222,"Game")
 
 def Fun(Case):
     
