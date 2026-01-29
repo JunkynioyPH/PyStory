@@ -44,7 +44,6 @@ class AudioManager():
         
         self.settings:dict[str, QAudioDevice|dict[str, int]] = {"device":device,"volume":{}}
         self.audioGroups:dict[str, SoundType] = audioGroups
-        # self.multiMode:dict[str, bool] = {}
         self.loopMode:dict[str, bool] = {}
         self.audioPool:dict[str, list[SoundEffect|AudioMedia]] = {}
         self.audioIndex:dict[SoundType, dict[str, str]] = {SoundType.AUDIO_MEDIA:{},SoundType.SOUND_EFFECT:{}}
